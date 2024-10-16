@@ -22,7 +22,7 @@ namespace SearchAndRescue.Entities
             return Ok(entity);
         }
 
-        [HttpGet]
+        [HttpGet("getAll")]
         public async Task<IActionResult> GetAll(Guid userId)
         {
             var entities = await _entitiesService.GetAll(userId);

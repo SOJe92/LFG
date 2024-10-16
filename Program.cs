@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.Extensions.Options;
 using SearchAndRescue;
 using SearchAndRescue.Startup;
 
@@ -30,6 +31,10 @@ if (!app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(policy =>
+        policy.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 app.UseStaticFiles();
 app.UseRouting();
 
