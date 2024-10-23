@@ -12,7 +12,7 @@ namespace SearchAndRescue.Configuration.Repositories
 
         public async Task<IEnumerable<Sector>> GetSectorsAsync()
         {
-            var sectors = await _dbService.ExecuteFunctionAsync<Sector>(Queries.GetSectors);
+            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
 
             return sectors;
         }

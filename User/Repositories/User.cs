@@ -47,7 +47,7 @@ namespace SearchAndRescue.User.Repositories
             var param = new DynamicParameters();
             param.Add("puserid", userId);
 
-            var result = await _dbService.ExecuteFunctionAsync<Models.Feature>(Queries.Permissions("*"), param);
+            var result = await _dbService.ExecuteQueryAsync<Models.Feature>(Queries.Permissions("*"), param);
 
             return result;
         }

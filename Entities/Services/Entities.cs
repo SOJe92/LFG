@@ -23,9 +23,9 @@ namespace SearchAndRescue.Entities.Services
             return result;
         }
 
-        public Task<int> Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            return await _entitiesRepository.Delete(id);
         }
 
         public async Task<Entity> Get(Guid id)
@@ -39,7 +39,7 @@ namespace SearchAndRescue.Entities.Services
             return _mapper.Map<IEnumerable<Entity>>(entities);
         }
 
-        public async Task<int> Update(Dtos.Put.Entity entity)
+        public async Task<bool> Update(Dtos.Put.Entity entity)
         {
             return await _entitiesRepository.Update(entity);
         }

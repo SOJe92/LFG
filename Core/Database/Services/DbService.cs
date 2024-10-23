@@ -61,6 +61,22 @@ namespace SearchAndRescue.Core.Database.Services
             return result;
         }
 
+        public async Task<int> SetData(string command, DynamicParameters parameters)
+        {
+            int result;
+            try
+            {
+                using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
+                result = await dbConnection.ExecuteAsync(command, parameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return result;
+        }
+
         public async Task<DynamicParameters> ExecuteProcedureAsync(string command, DynamicParameters parameters)
         {
             try
@@ -89,12 +105,27 @@ namespace SearchAndRescue.Core.Database.Services
             return null;
         }
 
-        public async Task<IEnumerable<T>> ExecuteFunctionAsync<T>(string command, object parameters)
+        public async Task<int> ExecuteFunctionAsync(string command, object parameters)
         {
             try
             {
                 using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
-                return await dbConnection.QueryAsync<T>(command, parameters);
+                var result = await dbConnection.ExecuteAsync(command, parameters);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQueryAsync<T>(string command, object parameters)
+        {
+            try
+            {
+                using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
+                var result = await dbConnection.QueryAsync<T>(command, parameters);
+                return result;
             }
             catch (Exception)
             {

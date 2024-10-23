@@ -15,8 +15,8 @@ namespace SearchAndRescue.Helpers
             var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
             var definedProperties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null && x.GetValue(obj) != null);
             tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
-            columnNames = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}  AS {p.Name}"));
-            parameters = string.Join(", ", definedProperties.Select(p => "@" + p.Name));
+            columnNames = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+            parameters = string.Join(", ", definedProperties.Select(p => $"@{p.GetCustomAttribute<ColumnAttribute>().Name}"));
         }
         public static void BuildUpdateQuery<T>(T obj, out string tableName, out string setValues)
         {
@@ -25,6 +25,17 @@ namespace SearchAndRescue.Helpers
             var definedProperties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null && x.GetValue(obj) != null);
             tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
             setValues = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name} = @{p.Name}"));
+        }
+        public static void BuildDeleteQueryParams<T>(T obj, out string setValues)
+        {
+            Type type = typeof(T);
+            var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
+            var definedProperties = properties.Where(x =>
+            {
+                object? objectValue = x.GetValue(obj);
+                return objectValue != null && !string.IsNullOrEmpty(objectValue.ToString()) && !Equals(objectValue, Guid.Empty);
+            });
+            setValues = string.Join(" AND ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name} = @{p.Name}"));
         }
 
         public static void BuildQuery<T>(out string tableName, out string columnNames)
@@ -47,6 +58,7 @@ namespace SearchAndRescue.Helpers
                 string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;
                 var value = property.GetValue(obj);
                 var dbType = ConvertToDbType(property.PropertyType);
+                value ??= (dbType == DbType.String ? "" : DBNull.Value);
                 parameters.Add(columnName, value, dbType, direction);
             }
         }

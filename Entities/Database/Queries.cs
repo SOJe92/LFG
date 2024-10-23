@@ -6,6 +6,6 @@
 
         public static string Get(string columns) => $"SELECT {columns} FROM public.entities WHERE id = @id";
 
-        public static string Delete => "DELETE FROM public.entities WHERE ";
+        public static string Delete(string parameters) => $"DELETE FROM public.entities WHERE {parameters}";
     }
 }

@@ -15,7 +15,7 @@ namespace SearchAndRescue.Entities
             _entitiesService = entitiesService;
         }
 
-        [HttpGet("entity")]
+        [HttpGet("entity/{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var entity = await _entitiesService.Get(id);
@@ -36,11 +36,18 @@ namespace SearchAndRescue.Entities
             return Ok(addedEntity);
         }
 
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Dtos.Put.Entity entity)
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Dtos.Put.Entity entity)
         {
             var updatedEntity = await _entitiesService.Update(entity);
             return Ok(updatedEntity);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deletedEntity = await _entitiesService.Delete(id);
+            return Ok(deletedEntity);
         }
     }
 }

@@ -10,8 +10,8 @@ namespace SearchAndRescue.Entities.Contracts.Services
 
         Task<int> Add(Dtos.Post.Entity entity);
 
-        Task<int> Update(Dtos.Put.Entity entity);
+        Task<bool> Update(Dtos.Put.Entity entity);
 
-        Task<int> Delete(Guid id);
+        Task<bool> Delete(Guid id);
     }
 }
