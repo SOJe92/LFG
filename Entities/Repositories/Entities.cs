@@ -4,51 +4,19 @@ using SearchAndRescue.Core.Database.Contracts;
 using SearchAndRescue.Entities.Contracts.Repositories;
 using SearchAndRescue.Entities.Database;
 using SearchAndRescue.Helpers;
-using System.Data;
 
 namespace SearchAndRescue.Entities.Repositories
 {
     public class Entities : IEntities
     {
-        private readonly IMapper _mapper;
         private readonly IDbService _dbService;
 
-        public Entities(IMapper mapper, IDbService dbService)
+        public Entities(IDbService dbService)
         {
-            _mapper = mapper;
             _dbService = dbService;
         }
 
-        public async Task<int> Add(Dtos.Post.Entity entity)
-        {
-            Models.Entity model = _mapper.Map<Models.Entity>(entity);
-            PostgresDataAccess.BuildQuery(model, out string tableName, out string columns, out string parameters);
-            PostgresDataAccess.BuildParams(model, out DynamicParameters parametersModel);
-            var result = await _dbService.SetData($"INSERT INTO {tableName} ({columns}) VALUES ({parameters});", parametersModel);
-
-            return result;
-        }
-
-        public async Task<bool> Delete(Guid id)
-        {
-            var param = new DynamicParameters();
-            param.Add("id", id);
-            PostgresDataAccess.BuildDeleteQueryParams(new Models.Entity { Id = id }, out string columns);
-            var count = await _dbService.ExecuteFunctionAsync(Queries.Delete(columns), param);
-            return count > 0;
-        }
-
-        public async Task<Models.Entity> Get(Guid id)
-        {
-            var param = new DynamicParameters();
-            param.Add("id", id);
-            PostgresDataAccess.BuildQuery<Models.Entity>(out string tableName, out string columns);
-            var entity = await _dbService.ExecuteQueryAsync<Models.Entity>(Queries.Get(columns), param);
-
-            return entity.FirstOrDefault();
-        }
-
-        public async Task<IEnumerable<Models.Entity>> GetAll(Guid id)
+        public async Task<IEnumerable<Models.Entity>> Get(Guid id)
         {
             var param = new DynamicParameters();
             param.Add("puserid", id);
@@ -57,17 +25,11 @@ namespace SearchAndRescue.Entities.Repositories
             return entities;
         }
 
-        public async Task<bool> Update(Dtos.Put.Entity entity)
+        public async Task<IEnumerable<Models.Entity>> GetAll()
         {
-            var param = new DynamicParameters();
-            param.Add("id", entity.Id);
-
-            Models.Entity model = _mapper.Map<Models.Entity>(entity);
-            PostgresDataAccess.BuildUpdateQuery(model, out string tableName, out string columns);
-
-            var result = await _dbService.SetData($"UPDATE {tableName} SET {columns} WHERE id = @id;", model);
-
-            return result > 0;
+            PostgresDataAccess.BuildQuery<Models.Entity>(out _, out string columns);
+            var entities = await _dbService.ExecuteQueryAsync<Models.Entity>(Queries.GetAll(columns));
+            return entities;
         }
     }
 }

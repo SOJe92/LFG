@@ -16,38 +16,17 @@ namespace SearchAndRescue.Entities
         }
 
         [HttpGet("entity/{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(Guid userId)
         {
-            var entity = await _entitiesService.Get(id);
+            var entity = await _entitiesService.Get(userId);
             return Ok(entity);
         }
 
-        [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll(Guid userId)
+        [HttpGet("entity")]
+        public async Task<IActionResult> GetAll()
         {
-            var entities = await _entitiesService.GetAll(userId);
-            return Ok(entities);
-        }
-
-        [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] Dtos.Post.Entity entity)
-        {
-            var addedEntity = await _entitiesService.Add(entity);
-            return Ok(addedEntity);
-        }
-
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] Dtos.Put.Entity entity)
-        {
-            var updatedEntity = await _entitiesService.Update(entity);
-            return Ok(updatedEntity);
-        }
-
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var deletedEntity = await _entitiesService.Delete(id);
-            return Ok(deletedEntity);
+            var entity = await _entitiesService.GetAll();
+            return Ok(entity);
         }
     }
 }

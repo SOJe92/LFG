@@ -16,32 +16,16 @@ namespace SearchAndRescue.Entities.Services
             _mapper = mapper;
         }
 
-        public async Task<int> Add(Dtos.Post.Entity entity)
+        public async Task<IEnumerable<Dtos.Get.Entity>> Get(Guid id)
         {
-            var result = await _entitiesRepository.Add(entity);
-            
-            return result;
+            var entities = await _entitiesRepository.Get(id);
+            return _mapper.Map<IEnumerable<Dtos.Get.Entity>>(entities);
         }
 
-        public async Task<bool> Delete(Guid id)
+        public async Task<IEnumerable<Dtos.Get.Entity>> GetAll()
         {
-            return await _entitiesRepository.Delete(id);
-        }
-
-        public async Task<Entity> Get(Guid id)
-        {
-            return _mapper.Map<Entity>(await _entitiesRepository.Get(id));
-        }
-
-        public async Task<IEnumerable<Entity>> GetAll(Guid id)
-        {
-            var entities = await _entitiesRepository.GetAll(id);
-            return _mapper.Map<IEnumerable<Entity>>(entities);
-        }
-
-        public async Task<bool> Update(Dtos.Put.Entity entity)
-        {
-            return await _entitiesRepository.Update(entity);
+            var entities = await _entitiesRepository.GetAll();
+            return _mapper.Map<IEnumerable<Dtos.Get.Entity>>(entities);
         }
     }
 }
