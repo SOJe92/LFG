@@ -3,6 +3,6 @@
     public interface IEntities
     {
         Task<IEnumerable<Dtos.Get.Entity>> Get(Guid id);
-        Task<IEnumerable<Dtos.Get.Entity>> GetAll();
+        Task<IEnumerable<Dtos.Get.Entity>> Get();
     }
 }

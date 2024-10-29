@@ -15,17 +15,17 @@ namespace SearchAndRescue.Entities
             _entitiesService = entitiesService;
         }
 
-        [HttpGet("entity/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid userId)
         {
             var entity = await _entitiesService.Get(userId);
             return Ok(entity);
         }
 
-        [HttpGet("entity")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var entity = await _entitiesService.GetAll();
+            var entity = await _entitiesService.Get();
             return Ok(entity);
         }
     }

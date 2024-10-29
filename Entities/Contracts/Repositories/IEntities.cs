@@ -3,6 +3,6 @@
     public interface IEntities
     {
         Task<IEnumerable<Models.Entity>> Get(Guid id);
-        Task<IEnumerable<Models.Entity>> GetAll();
+        Task<IEnumerable<Models.Entity>> Get();
     }
 }

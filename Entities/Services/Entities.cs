@@ -22,9 +22,9 @@ namespace SearchAndRescue.Entities.Services
             return _mapper.Map<IEnumerable<Dtos.Get.Entity>>(entities);
         }
 
-        public async Task<IEnumerable<Dtos.Get.Entity>> GetAll()
+        public async Task<IEnumerable<Dtos.Get.Entity>> Get()
         {
-            var entities = await _entitiesRepository.GetAll();
+            var entities = await _entitiesRepository.Get();
             return _mapper.Map<IEnumerable<Dtos.Get.Entity>>(entities);
         }
     }

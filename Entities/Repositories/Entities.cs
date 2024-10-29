@@ -21,14 +21,14 @@ namespace SearchAndRescue.Entities.Repositories
             var param = new DynamicParameters();
             param.Add("puserid", id);
             PostgresDataAccess.BuildQuery<Models.Entity>(out _, out string columns);
-            var entities = await _dbService.ExecuteQueryAsync<Models.Entity>(Queries.GetAll(columns), param);
+            var entities = await _dbService.ExecuteQueryAsync<Models.Entity>(Queries.GetByUserId(columns), param);
             return entities;
         }
 
-        public async Task<IEnumerable<Models.Entity>> GetAll()
+        public async Task<IEnumerable<Models.Entity>> Get()
         {
             PostgresDataAccess.BuildQuery<Models.Entity>(out _, out string columns);
-            var entities = await _dbService.ExecuteQueryAsync<Models.Entity>(Queries.GetAll(columns));
+            var entities = await _dbService.ExecuteQueryAsync<Models.Entity>(Queries.Get(columns));
             return entities;
         }
     }
