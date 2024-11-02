@@ -18,7 +18,7 @@ namespace SearchAndRescue.User.Services
 
         public async Task<LoginUser> Authenticate(Dtos.Post.User login)
         {
-            Models.User userRegistration = _mapper.Map<Models.User>(login);
+            Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
             var result = await _repository.TryGet(userRegistration);
             LoginUser loginUser = _mapper.Map<LoginUser>(result);
             if (loginUser.Id.HasValue)
@@ -30,13 +30,13 @@ namespace SearchAndRescue.User.Services
 
         public async Task<int> Register(Dtos.Post.User registration)
         {
-            Models.User userRegistration = _mapper.Map<Models.User>(registration);
+            Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(registration);
             return await _repository.Create(userRegistration);
         }
 
         public async Task<LoginUser> SignInAsync(LoginUser login)
         {
-            Models.User userLogin = _mapper.Map<Models.User>(login);
+            Database.Models.User userLogin = _mapper.Map<Database.Models.User>(login);
             userLogin = await _repository.Get(userLogin);
             login = _mapper.Map<LoginUser>(userLogin);
             return login;

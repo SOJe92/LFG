@@ -8,12 +8,12 @@ namespace SearchAndRescue.User.Repositories
         {
         }
 
-        public async Task<Models.Configuration> GetAsync(Guid id)
+        public async Task<Database.Models.Configuration> GetAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> SetAsync(Guid id, Models.Configuration config)
+        public async Task<bool> SetAsync(Guid id, Database.Models.Configuration config)
         {
             throw new NotImplementedException();
         }

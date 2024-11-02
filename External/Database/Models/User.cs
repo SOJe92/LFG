@@ -1,12 +1,12 @@
 ﻿using SearchAndRescue.Core.Database.Attributes;
-using SearchAndRescue.User.Models;
+using SearchAndRescue.User.Database.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SearchAndRescue.External.Models
+namespace SearchAndRescue.External.Database.Models
 {
     [Table("account.users")]
-    public record ExternalUser : User.Models.User 
+    public record ExternalUser : User.Database.Models.User 
     {
     }
 }

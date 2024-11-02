@@ -2,9 +2,9 @@
 {
     public interface IEntity
     {
-        Task<Models.Entity> Get(Guid id);
-        Task<int> Add(Dtos.Post.Entity entity);
-        Task<bool> Update(Dtos.Put.Entity entity);
+        Task<Database.Models.Entity> Get(Guid id);
+        Task<int> Add(Database.Models.Entity entity);
+        Task<bool> Update(Database.Models.Entity entity);
         Task<bool> Delete(Guid id);
     }
 }

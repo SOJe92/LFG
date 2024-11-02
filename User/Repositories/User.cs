@@ -15,7 +15,7 @@ namespace SearchAndRescue.User.Repositories
             _dbService = dbService;
         }
 
-        public async Task<Models.User> TryGet(Models.User login)
+        public async Task<Database.Models.User> TryGet(Database.Models.User login)
         {
             PostgresDataAccess.BuildParams(login, out DynamicParameters parameters);
             var result = await _dbService.ExecuteProcedureAsync(Queries.TrySignin, parameters);
@@ -24,30 +24,30 @@ namespace SearchAndRescue.User.Repositories
             return login;
         }
 
-        public async Task<Models.User> Get(Models.User login)
+        public async Task<Database.Models.User> Get(Database.Models.User login)
         {
-            PostgresDataAccess.BuildQuery<Models.User>(out string tableName, out string columnNames);
+            PostgresDataAccess.BuildQuery<Database.Models.User>(out string tableName, out string columnNames);
             string query = $"SELECT {columnNames} FROM {tableName}",
                     filter = $"WHERE password=@password AND {(login.Username != null ? "username=@username" : "email=@email")}";
 
-            var result = await _dbService.GetAsync<Models.User>($"{query} {filter}", login);
+            var result = await _dbService.GetAsync<Database.Models.User>($"{query} {filter}", login);
 
             return result;
         }
 
-        public async Task<int> Create(Models.User registration)
+        public async Task<int> Create(Database.Models.User registration)
         {
             string query = "";
 
             return await _dbService.SetData(query, registration);
         }
-        public async Task<IEnumerable<Models.Feature>> GetFeaturePermissions(Guid userId)
+        public async Task<IEnumerable<Database.Models.Feature>> GetFeaturePermissions(Guid userId)
         {
-            PostgresDataAccess.BuildQuery<Models.Feature>(out _, out string columnNames);
+            PostgresDataAccess.BuildQuery<Database.Models.Feature>(out _, out string columnNames);
             var param = new DynamicParameters();
             param.Add("puserid", userId);
 
-            var result = await _dbService.ExecuteQueryAsync<Models.Feature>(Queries.Permissions("*"), param);
+            var result = await _dbService.ExecuteQueryAsync<Database.Models.Feature>(Queries.Permissions("*"), param);
 
             return result;
         }

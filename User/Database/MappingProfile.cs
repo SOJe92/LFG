@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SearchAndRescue.User.Dtos.Get;
-using UserEntity = SearchAndRescue.User.Models.User;
+using UserEntity = SearchAndRescue.User.Database.Models.User;
 
 namespace SearchAndRescue.User.Database
 {

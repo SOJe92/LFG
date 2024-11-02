@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SearchAndRescue.User.Models
+namespace SearchAndRescue.User.Database.Models
 {
     [Table("settings.permissions")]
     public class Permission

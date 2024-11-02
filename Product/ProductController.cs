@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SearchAndRescue.Product.Contracts.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +9,40 @@ namespace SearchAndRescue.Product
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private readonly IProduct _productService;
+
+        public ProductController(IProduct productService)
+        {
+            _productService = productService;
+        }
+
         // GET: api/<ProductController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return "value";
+            var product = await _productService.Get(id);
+            return Ok(product);
         }
 
-        // POST api/<ProductController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Add([FromBody] Dtos.Post.Product product)
         {
+            var addedProduct = await _productService.Add(product);
+            return Ok(addedProduct);
         }
 
-        // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Dtos.Put.Product product)
         {
+            var updatedProduct = await _productService.Update(product);
+            return Ok(updatedProduct);
         }
 
-        // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            var deletedProduct = await _productService.Delete(id);
+            return Ok(deletedProduct);
         }
     }
 }

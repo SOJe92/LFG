@@ -17,7 +17,8 @@ namespace SearchAndRescue.Entity.Services
 
         public async Task<int> Add(Dtos.Post.Entity entity)
         {
-            var result = await _entityRepository.Add(entity);
+            Database.Models.Entity model = _mapper.Map<Database.Models.Entity>(entity);
+            var result = await _entityRepository.Add(model);
 
             return result;
         }
@@ -34,7 +35,8 @@ namespace SearchAndRescue.Entity.Services
 
         public async Task<bool> Update(Dtos.Put.Entity entity)
         {
-            return await _entityRepository.Update(entity);
+            Database.Models.Entity model = _mapper.Map<Database.Models.Entity>(entity);
+            return await _entityRepository.Update(model);
         }
     }
 }

@@ -56,17 +56,8 @@
     <Folder Include="Products\Dtos\Patch\" />
     <Folder Include="Products\Dtos\Post\" />
     <Folder Include="Products\Dtos\Put\" />
-    <Folder Include="Product\Contracts\Repositories\" />
-    <Folder Include="Product\Contracts\Services\" />
-    <Folder Include="Product\Database\Models\" />
-    <Folder Include="Product\Dtos\Base\" />
     <Folder Include="Product\Dtos\Delete\" />
-    <Folder Include="Product\Dtos\Get\" />
     <Folder Include="Product\Dtos\Patch\" />
-    <Folder Include="Product\Dtos\Post\" />
-    <Folder Include="Product\Dtos\Put\" />
-    <Folder Include="Product\Repositories\" />
-    <Folder Include="Product\Services\" />
     <Folder Include="Search\Database\" />
     <Folder Include="Search\Database\Models\" />
     <Folder Include="Search\Repositories\" />

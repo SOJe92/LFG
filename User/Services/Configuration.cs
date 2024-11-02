@@ -23,7 +23,7 @@ namespace SearchAndRescue.User.Services
 
         public async Task<bool> UpdateAsync(Guid id, Dtos.Post.Configuration config)
         {
-            var result = await _repo.SetAsync(id, _mapper.Map<Models.Configuration>(config));
+            var result = await _repo.SetAsync(id, _mapper.Map<Database.Models.Configuration>(config));
             return result;
         }
     }

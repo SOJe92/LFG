@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SearchAndRescue.User.Models
+namespace SearchAndRescue.User.Database.Models
 {
     [Table("account.users")]
     public record User
