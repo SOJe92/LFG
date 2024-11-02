@@ -1,15 +1,12 @@
-﻿using SearchAndRescue.Core.Database.Attributes;
+﻿using SearchAndRescue.Core.Database;
+using SearchAndRescue.Core.Database.Attributes;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.Entities.Models
 {
     [Table("public.entities")]
-    public class Entity
+    public class Entities : DbEntity
     {
-        [Column("id")]
-        [DapperParamDirectionAttribute(System.Data.ParameterDirection.InputOutput)]
-        public Guid? Id { get; set; }
-
         [Column("name")]
         [DapperParamDirectionAttribute(System.Data.ParameterDirection.Input)]
         public string Name { get; set; }

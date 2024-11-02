@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SearchAndRescue.User.Contracts;
-using SearchAndRescue.User.Dtos.Post;
+using IConfiguration = SearchAndRescue.User.Contracts.Services.IConfiguration;
 
 namespace SearchAndRescue.User.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly ILogin _loginService;
-        public UserController(ILogin loginService)
+        private readonly IConfiguration _configurationService;
+        public UserController(ILogin loginService, IConfiguration configurationService)
         {
             _loginService = loginService;
+            _configurationService = configurationService;
         }
 
         [HttpPost("register")]
@@ -42,6 +44,23 @@ namespace SearchAndRescue.User.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet("/configuration/{id}")]
+        public async Task<IActionResult> GetConfiguration(Guid id)
+        {
+            var config = _configurationService.GetAsync(id);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPut("/configuration/{id}")]
+        public async Task<IActionResult> UpdateConfiguration(Guid id, [FromBody] Dtos.Post.Configuration configuration)
+        {
+            var success = _configurationService.UpdateAsync(id, configuration);
+            return Ok();
+        }
+
 
         [HttpPost("forgotpassword")]
         public IActionResult Reset()

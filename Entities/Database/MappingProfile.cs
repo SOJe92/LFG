@@ -6,12 +6,8 @@ namespace SearchAndRescue.Entities.Database
     {
         public MappingProfile()
         {
-            CreateMap<Dtos.Post.Entity, Models.Entity>();
-            CreateMap<Models.Entity, Dtos.Post.Entity>();
-            CreateMap<Dtos.Get.Entity, Models.Entity>();
-            CreateMap<Models.Entity, Dtos.Get.Entity>();
-            CreateMap<Dtos.Put.Entity, Models.Entity>();
-            CreateMap<Models.Entity, Dtos.Put.Entity>();
+            CreateMap<Dtos.Get.Entities, Models.Entities>();
+            CreateMap<Models.Entities, Dtos.Get.Entities>();
         }
     }
 }

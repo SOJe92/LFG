@@ -16,16 +16,16 @@ namespace SearchAndRescue.Entities.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Dtos.Get.Entity>> Get(Guid id)
+        public async Task<IEnumerable<Dtos.Get.Entities>> Get(Guid id)
         {
             var entities = await _entitiesRepository.Get(id);
-            return _mapper.Map<IEnumerable<Dtos.Get.Entity>>(entities);
+            return _mapper.Map<IEnumerable<Dtos.Get.Entities>>(entities);
         }
 
-        public async Task<IEnumerable<Dtos.Get.Entity>> Get()
+        public async Task<IEnumerable<Dtos.Get.Entities>> Get()
         {
             var entities = await _entitiesRepository.Get();
-            return _mapper.Map<IEnumerable<Dtos.Get.Entity>>(entities);
+            return _mapper.Map<IEnumerable<Dtos.Get.Entities>>(entities);
         }
     }
 }

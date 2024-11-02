@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SearchAndRescue.Entity.Contracts.Services;
-using SearchAndRescue.Entity.Dtos.Get;
 using IEntityRepository = SearchAndRescue.Entity.Contracts.Repositories.IEntity;
 
 namespace SearchAndRescue.Entity.Services
@@ -19,7 +18,7 @@ namespace SearchAndRescue.Entity.Services
         public async Task<int> Add(Dtos.Post.Entity entity)
         {
             var result = await _entityRepository.Add(entity);
-            
+
             return result;
         }
 

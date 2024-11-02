@@ -21,10 +21,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Template\**" />
     <Compile Remove="_Template\**" />
+    <Content Remove="Template\**" />
     <Content Remove="_Template\**" />
+    <EmbeddedResource Remove="Template\**" />
     <EmbeddedResource Remove="_Template\**" />
+    <None Remove="Template\**" />
     <None Remove="_Template\**" />
+    <TypeScriptCompile Remove="Template\**" />
     <TypeScriptCompile Remove="_Template\**" />
   </ItemGroup>
 
@@ -45,6 +50,26 @@
 
   <ItemGroup>
     <Folder Include="Core\Persistence\" />
+    <Folder Include="Entities\Dtos\Post\" />
+    <Folder Include="Entities\Dtos\Put\" />
+    <Folder Include="Products\Dtos\Delete\" />
+    <Folder Include="Products\Dtos\Patch\" />
+    <Folder Include="Products\Dtos\Post\" />
+    <Folder Include="Products\Dtos\Put\" />
+    <Folder Include="Product\Contracts\Repositories\" />
+    <Folder Include="Product\Contracts\Services\" />
+    <Folder Include="Product\Database\Models\" />
+    <Folder Include="Product\Dtos\Base\" />
+    <Folder Include="Product\Dtos\Delete\" />
+    <Folder Include="Product\Dtos\Get\" />
+    <Folder Include="Product\Dtos\Patch\" />
+    <Folder Include="Product\Dtos\Post\" />
+    <Folder Include="Product\Dtos\Put\" />
+    <Folder Include="Product\Repositories\" />
+    <Folder Include="Product\Services\" />
+    <Folder Include="Search\Database\" />
+    <Folder Include="Search\Database\Models\" />
+    <Folder Include="Search\Repositories\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

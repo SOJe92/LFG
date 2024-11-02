@@ -1,6 +1,6 @@
 ﻿namespace SearchAndRescue.Entities.Dtos.Get
 {
-    public class Entity : Base.Entity
+    public class Entities : Base.Entities
     {
         public Guid Id { get; set; }
     }

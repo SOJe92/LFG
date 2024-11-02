@@ -1,6 +1,6 @@
 ﻿namespace SearchAndRescue.Entities.Dtos.Base
 {
-    public class Entity
+    public class Entities
     {
         public string? Name { get; set; }
 

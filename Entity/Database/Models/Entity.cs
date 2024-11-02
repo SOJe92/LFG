@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.Entity.Models
 {
-    [Table("public.entities")]
+    [Table("private.entity")]
     public class Entity
     {
         [Column("id")]

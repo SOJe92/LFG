@@ -2,7 +2,7 @@
 {
     public interface IEntities
     {
-        Task<IEnumerable<Dtos.Get.Entity>> Get(Guid id);
-        Task<IEnumerable<Dtos.Get.Entity>> Get();
+        Task<IEnumerable<Dtos.Get.Entities>> Get(Guid id);
+        Task<IEnumerable<Dtos.Get.Entities>> Get();
     }
 }
