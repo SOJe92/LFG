@@ -2,8 +2,8 @@
 {
     public interface IConfiguration
     {
-        Task<Database.Models.Configuration> GetAsync(Guid id);
+        Task<Database.Models.Setting> GetAsync(Guid id);
 
-        Task<bool> SetAsync(Guid id, Database.Models.Configuration config);
+        Task<bool> SetAsync(Guid id, Database.Models.Setting config);
     }
 }

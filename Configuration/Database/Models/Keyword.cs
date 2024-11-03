@@ -1,10 +1,10 @@
 ﻿using SearchAndRescue.Core.Database;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SearchAndRescue.Configuration.Models
+namespace SearchAndRescue.Configuration.Database.Models
 {
-    [Table("public.sectors")]
-    public class Sector : DbEntity
+    [Table("public.keywords")]
+    public class Keyword : DbEntity
     {
         [Column("name")]
         public string Name { get; set; }

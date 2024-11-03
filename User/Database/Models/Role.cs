@@ -2,8 +2,8 @@
 
 namespace SearchAndRescue.User.Database.Models
 {
-    [Table("lookup.userfeatures")]
-    public class Feature
+    [Table("lookup.userrole")]
+    public class Role
     {
         [Column("id")]
         public Guid Id { get; set; }
@@ -11,10 +11,7 @@ namespace SearchAndRescue.User.Database.Models
         [Column("user_id")]
         public Guid UserId { get; set; }
 
-        [Column("feature_id")]
-        public Guid FeatureId { get;set; }
-
-        [Column("enabled")]
-        public bool Enabled { get; set; }
+        [Column("role_id")]
+        public Guid RoleId { get; set; }
     }
 }

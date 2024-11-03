@@ -10,5 +10,7 @@ namespace SearchAndRescue.User.Dtos.Base
         public Guid[] OwnerFavourites { get; set; }
 
         public Guid[] ProductFavourites { get; set; }
+
+        public Setting Settings { get; set; }
     }
 }

@@ -14,8 +14,8 @@ namespace SearchAndRescue.User.Database
             CreateMap<UserEntity, Dtos.Post.User>();
             CreateMap<FeaturePermission, Models.Feature>();
             CreateMap<Models.Feature, FeaturePermission>();
-            CreateMap<Dtos.Get.Configuration, Models.Configuration>();
-            CreateMap<Models.Configuration, Dtos.Get.Configuration>();
+            CreateMap<Dtos.Get.Configuration, Models.Setting>();
+            CreateMap<Models.Setting, Dtos.Get.Configuration>();
         }
     }
 }
