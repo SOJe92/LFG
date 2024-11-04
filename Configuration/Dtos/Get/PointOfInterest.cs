@@ -1,15 +1,18 @@
 ﻿using SearchAndRescue.Core.Database;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SearchAndRescue.Configuration.Database.Models
+namespace SearchAndRescue.Configuration.Dtos.Get
 {
-    [Table("public.sectors")]
-    public class Sector : DbEntity
+    public class PointOfInterest
     {
-        [Column("name")]
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
 
-        [Column("description")]
         public string Description { get; set; }
+
+        public long X { get; set; }
+
+        public long Y { get; set; }
     }
 }
