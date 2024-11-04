@@ -13,5 +13,6 @@
         Task<IEnumerable<Database.Models.ProductFavourites>> GetProductFavouritesAsync();
         Task<IEnumerable<Database.Models.Role>> GetRolesAsync();
         Task<IEnumerable<Database.Models.Service>> GetServicesAsync();
+        Task<IEnumerable<Database.Models.SectorService>> GetSectorServicesAsync();
     }
 }

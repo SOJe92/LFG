@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SearchAndRescue.Configuration.Database.Models
 {
     [Table("settings.role")]
-    public class Role : DbEntity
+    public record Role : DbEntity
     {
         [Column("name")]
         public string Name { get; set; }

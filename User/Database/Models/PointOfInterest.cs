@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SearchAndRescue.Core.Database;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.User.Database.Models
 {
     [Table("lookup.userpoi")]
-    public class PointOfInterest
+    public record PointOfInterest : DbEntity
     {
-        [Column("id")]
-        public Guid Id { get; set; }
-
         [Column("user_id")]
         public Guid UserId { get; set; }
 

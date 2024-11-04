@@ -3,7 +3,7 @@ using SearchAndRescue.User.Dtos.Base;
 
 namespace SearchAndRescue.User.Dtos.Post
 {
-    public class User : UserBase
+    public class User : Base.User
     {
         [JsonProperty]
         public string? FirstName { get; set; }

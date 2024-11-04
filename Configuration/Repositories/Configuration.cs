@@ -10,67 +10,67 @@ namespace SearchAndRescue.Configuration.Repositories
 
         public Configuration(IDbService dbService) => _dbService = dbService;
 
-        public Task<IEnumerable<Category>> GetCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {
             var categories = await _dbService.ExecuteQueryAsync<Category>(Queries.GetCategories);
 
             return categories;
         }
 
-        public Task<IEnumerable<ContactType>> GetContactTypesAsync()
+        public async Task<IEnumerable<ContactType>> GetContactTypesAsync()
         {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
+            var contactTypes = await _dbService.ExecuteQueryAsync<ContactType>(Queries.GetContactTypes);
+
+            return contactTypes;
+        }
+
+        public async Task<IEnumerable<EntityFavourites>> GetEntityFavouritesAsync()
+        {
+            var entityFavourites = await _dbService.ExecuteQueryAsync<EntityFavourites>(Queries.GetEntityFavourites);
+
+            return entityFavourites;
+        }
+
+        public async Task<IEnumerable<EntityType>> GetEntityTypesAsync()
+        {
+            var entityTypes = await _dbService.ExecuteQueryAsync<EntityType>(Queries.GetEntityTypes);
+
+            return entityTypes;
+        }
+
+        public async Task<IEnumerable<Feature>> GetFeaturesAsync()
+        {
+            var features = await _dbService.ExecuteQueryAsync<Feature>(Queries.GetFeatures);
+
+            return features;
+        }
+
+        public async Task<IEnumerable<Keyword>> GetKeywordsAsync()
+        {
+            var keywords = await _dbService.ExecuteQueryAsync<Keyword>(Queries.GetKeywords);
+
+            return keywords;
+        }
+
+        public async Task<IEnumerable<PointOfInterest>> GetPointOfInterestsAsync()
+        {
+            var pois = await _dbService.ExecuteQueryAsync<PointOfInterest>(Queries.GetPointOfInterests);
+
+            return pois;
+        }
+
+        public async Task<IEnumerable<ProductFavourites>> GetProductFavouritesAsync()
+        {
+            var sectors = await _dbService.ExecuteQueryAsync<ProductFavourites>(Queries.GetProductFavourites);
 
             return sectors;
         }
 
-        public Task<IEnumerable<EntityFavourites>> GetEntityFavouritesAsync()
+        public async Task<IEnumerable<Role>> GetRolesAsync()
         {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
+            var roles = await _dbService.ExecuteQueryAsync<Role>(Queries.GetRoles);
 
-            return sectors;
-        }
-
-        public Task<IEnumerable<EntityType>> GetEntityTypesAsync()
-        {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
-
-            return sectors;
-        }
-
-        public Task<IEnumerable<Feature>> GetFeaturesAsync()
-        {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
-
-            return sectors;
-        }
-
-        public Task<IEnumerable<Keyword>> GetKeywordsAsync()
-        {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
-
-            return sectors;
-        }
-
-        public Task<IEnumerable<PointOfInterest>> GetPointOfInterestsAsync()
-        {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
-
-            return sectors;
-        }
-
-        public Task<IEnumerable<ProductFavourites>> GetProductFavouritesAsync()
-        {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
-
-            return sectors;
-        }
-
-        public Task<IEnumerable<Role>> GetRolesAsync()
-        {
-            var sectors = await _dbService.ExecuteQueryAsync<Sector>(Queries.GetSectors);
-
-            return sectors;
+            return roles;
         }
 
         public async Task<IEnumerable<Sector>> GetSectorsAsync()
@@ -80,7 +80,14 @@ namespace SearchAndRescue.Configuration.Repositories
             return sectors;
         }
 
-        public Task<IEnumerable<Service>> GetServicesAsync()
+        public async Task<IEnumerable<SectorService>> GetSectorServicesAsync()
+        {
+            var sectorServices = await _dbService.ExecuteQueryAsync<SectorService>(Queries.GetSectorServices);
+
+            return sectorServices;
+        }
+
+        public async Task<IEnumerable<Service>> GetServicesAsync()
         {
             var services = await _dbService.ExecuteQueryAsync<Service>(Queries.GetServices);
 

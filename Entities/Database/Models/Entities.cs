@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SearchAndRescue.Entities.Database.Models
 {
     [Table("private.entity")]
-    public class Entities : DbEntity
+    public record Entities : DbEntity
     {
         [Column("name")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]

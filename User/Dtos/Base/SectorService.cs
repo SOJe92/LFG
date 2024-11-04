@@ -1,18 +1,14 @@
 ﻿using SearchAndRescue.Core.Database;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SearchAndRescue.User.Database.Models
+namespace SearchAndRescue.User.Dtos.Base
 {
-    [Table("lookup.usersectorservices")]
-    public record SectorService : DbEntity
+    public class SectorService
     {
-        [Column("user_id")]
         public Guid UserId { get; set; }
 
-        [Column("sector_id")]
         public Guid SectorId { get; set; }
 
-        [Column("service_id")]
         public Guid ServiceId { get; set; }
     }
 }

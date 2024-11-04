@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SearchAndRescue.Core.Database;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.User.Database.Models
 {
     [Table("lookup.usercontacttype")]
-    public class ContactType
+    public record ContactType : DbEntity
     {
-        [Column("id")]
-        public Guid Id { get; set; }
-
         [Column("user_id")]
         public Guid UserId { get; set; }
 

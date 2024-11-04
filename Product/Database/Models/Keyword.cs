@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SearchAndRescue.Product.Database.Models
 {
     [Table("lookup.productkeywords")]
-    public class Keyword : DbEntity
+    public record Keyword : DbEntity
     {
         [Column("product_id")]
         public Guid ProductId { get; set; }

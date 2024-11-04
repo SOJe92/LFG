@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SearchAndRescue.Core.Database;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.User.Database.Models
 {
     [Table("settings.permissions")]
-    public class Permission
+    public record Permission : DbEntity
     {
-        [Column("id")]
-        public Guid Id { get; set; }
-
         [Column("key")]
         public string Key { get; set; }
 

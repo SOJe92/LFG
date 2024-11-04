@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SearchAndRescue.Configuration.Database.Models
 {
     [Table("settings.features")]
-    public class Feature : DbEntity
+    public record Feature : DbEntity
     {
         [Column("key")]
         public string Key { get; set; }

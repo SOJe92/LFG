@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SearchAndRescue.Core.Database;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.User.Database.Models
 {
     [Table("settings.user")]
-    public class Setting
+    public record Setting : DbEntity
     {
-        [Column("id")]
-        public Guid Id { get; set; }
-
         [Column("locationx")]
         public long LocationX { get; set; }
 

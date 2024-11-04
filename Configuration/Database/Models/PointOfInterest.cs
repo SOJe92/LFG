@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SearchAndRescue.Configuration.Database.Models
 {
     [Table("public.poi")]
-    public class PointOfInterest : DbEntity
+    public record PointOfInterest : DbEntity
     {
         [Column("name")]
         public string Name { get; set; }

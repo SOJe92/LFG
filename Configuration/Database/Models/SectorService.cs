@@ -1,13 +1,11 @@
 ﻿using SearchAndRescue.Core.Database;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SearchAndRescue.User.Database.Models
+namespace SearchAndRescue.Configuration.Database.Models
 {
-    [Table("lookup.usersectorservices")]
+    [Table("lookup.sectorservices")]
     public record SectorService : DbEntity
     {
-        [Column("user_id")]
-        public Guid UserId { get; set; }
 
         [Column("sector_id")]
         public Guid SectorId { get; set; }

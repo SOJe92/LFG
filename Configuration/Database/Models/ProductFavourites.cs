@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SearchAndRescue.Configuration.Database.Models
 {
     [Table("public.favourite_products")]
-    public class ProductFavourites : DbEntity
+    public record ProductFavourites : DbEntity
     {
         [Column("product_id")]
         public Guid ProductId { get; set; }

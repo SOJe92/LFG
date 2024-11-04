@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SearchAndRescue.Product.Database.Models
 {
     [Table("public.products")]
-    public class Product : DbEntity
+    public record Product : DbEntity
     {
         [Column("name")]
         public string Name { get; set; }

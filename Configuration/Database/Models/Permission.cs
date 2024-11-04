@@ -2,7 +2,7 @@
 
 namespace SearchAndRescue.Configuration.Database.Models
 {
-    public class Permission : DbEntity
+    public record Permission : DbEntity
     {
     }
 }
