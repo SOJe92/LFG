@@ -6,20 +6,32 @@ namespace SearchAndRescue.Configuration.Services
 {
     public class Configuration : Contracts.Services.IConfiguration
     {
-        private readonly IConfigurationRepository _configuration;
+        private readonly IConfigurationRepository _repo;
         private readonly IMapper _mapper;
 
-        public Configuration(IConfigurationRepository configurationRepository, IMapper mapper)
+        public Configuration(IConfigurationRepository repo, IMapper mapper)
         {
-            _configuration = configurationRepository;
+            _repo = repo;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Sector>> GetSectors()
+        public async Task<Dtos.Get.Configuration> GetAsync()
         {
-            IEnumerable<Sector> sectors = _mapper.Map<IEnumerable<Sector>>(await _configuration.GetSectorsAsync());
+            Dtos.Get.Configuration configuration = new();
 
-            return sectors;
+            configuration.Categories = _mapper.Map<IEnumerable<Category>>(await _repo.GetCategoriesAsync());
+            configuration.EntityTypes = _mapper.Map<IEnumerable<EntityType>>(await _repo.GetEntityTypesAsync());
+            configuration.Sectors = _mapper.Map<IEnumerable<Sector>>(await _repo.GetSectorsAsync());
+            configuration.ContactTypes = _mapper.Map<IEnumerable<ContactType>>(await _repo.GetContactTypesAsync());
+            configuration.PointOfInterests = _mapper.Map<IEnumerable<PointOfInterest>>(await _repo.GetPointOfInterestsAsync());
+            configuration.EntityFavourites = _mapper.Map<IEnumerable<EntityFavourites>>(await _repo.GetEntityFavouritesAsync());
+            configuration.ProductFavourites = _mapper.Map<IEnumerable<ProductFavourites>>(await _repo.GetProductFavouritesAsync());
+            configuration.Features = _mapper.Map<IEnumerable<Feature>>(await _repo.GetFeaturesAsync());
+            configuration.Keywords = _mapper.Map<IEnumerable<Keyword>>(await _repo.GetKeywordsAsync());
+            configuration.Roles = _mapper.Map<IEnumerable<Role>>(await _repo.GetRolesAsync());
+            configuration.SectorServices = _mapper.Map<IEnumerable<SectorService>>(await _repo.GetSectorServicesAsync());
+
+            return configuration;
         }
     }
 }

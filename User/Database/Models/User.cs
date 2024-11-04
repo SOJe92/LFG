@@ -1,6 +1,5 @@
 ﻿using SearchAndRescue.Core.Database;
 using SearchAndRescue.Core.Database.Attributes;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.User.Database.Models

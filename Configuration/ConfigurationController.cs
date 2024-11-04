@@ -16,9 +16,7 @@ namespace SearchAndRescue.Configuration
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            Dtos.Get.Configuration configuration = new();
-
-            configuration.Sectors = await _configuration.GetSectors();
+            Dtos.Get.Configuration configuration = await _configuration.GetAsync();
 
             return Ok(configuration);
         }

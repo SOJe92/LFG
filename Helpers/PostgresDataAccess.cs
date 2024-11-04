@@ -18,6 +18,53 @@ namespace SearchAndRescue.Helpers
             columnNames = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
             parameters = string.Join(", ", definedProperties.Select(p => $"@{p.GetCustomAttribute<ColumnAttribute>().Name}"));
         }
+
+        public static void BuildGetQuery<T>(T obj, out string tableName, out string columns, out DynamicParameters parameters, string? idColumn = null)
+        {
+            parameters = new();
+            Type type = typeof(T);
+            var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
+            var definedProperties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null && x.GetValue(obj) != null);
+            tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
+            columns = string.Join(", ", properties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+            if (idColumn != null)
+            {
+                foreach (var property in properties)
+                {
+                    ParameterDirection direction = ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(property, typeof(DapperParamDirectionAttribute))).Value;
+                    string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;
+                    var value = property.GetValue(obj);
+                    if (columnName == idColumn)
+                    {
+                        parameters.Add($"@{columnName}", value);
+                    }
+                }
+            }
+        }
+
+        public static void BuildGetQuery<T>(T obj, out string tableName, out string columns, out DynamicParameters parameters, string[] idColumn)
+        {
+            parameters = new();
+            Type type = typeof(T);
+            var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
+            var definedProperties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null && x.GetValue(obj) != null);
+            tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
+            columns = string.Join(", ", properties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+            if (idColumn.Length > 0)
+            {
+                foreach (var property in properties)
+                {
+                    ParameterDirection direction = ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(property, typeof(DapperParamDirectionAttribute))).Value;
+                    string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;
+                    var value = property.GetValue(obj);
+                    if (idColumn.Contains(columnName))
+                    {
+                        parameters.Add($"@{columnName}", value);
+                    }
+                }
+            }
+        }
+
         public static void BuildUpdateQuery<T>(T obj, out string tableName, out string setValues)
         {
             Type type = typeof(T);
@@ -52,7 +99,7 @@ namespace SearchAndRescue.Helpers
             Type type = typeof(T);
             var properties = type.GetProperties().Where(x => (DapperParamDirectionAttribute?)Attribute.GetCustomAttribute(x, typeof(DapperParamDirectionAttribute)) != null);
             properties = properties.OrderBy(x => ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(x, typeof(DapperParamDirectionAttribute))).Value);
-            foreach(var property in properties)
+            foreach (var property in properties)
             {
                 ParameterDirection direction = ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(property, typeof(DapperParamDirectionAttribute))).Value;
                 string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;

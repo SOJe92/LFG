@@ -2,6 +2,6 @@
 {
     public interface IConfiguration
     {
-        Task<IEnumerable<Dtos.Get.Sector>> GetSectors();
+        Task<Dtos.Get.Configuration> GetAsync();
     }
 }

@@ -12,6 +12,7 @@
         public IEnumerable<ProductFavourites> ProductFavourites { get; set; }
         public IEnumerable<Role> Roles { get; set; }
         public IEnumerable<Sector> Sectors { get; set; }
+        public IEnumerable<SectorService> SectorServices { get; set; }
         public IEnumerable<Service> Services { get; set; }
     }
 }

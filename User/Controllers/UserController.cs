@@ -46,19 +46,19 @@ namespace SearchAndRescue.User.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("/configuration/{id}")]
+        [HttpGet("{id}/configuration")]
         public async Task<IActionResult> GetConfiguration(Guid id)
         {
             var config = _configurationService.GetAsync(id);
-            return Ok();
+            return Ok(config);
         }
 
         [AllowAnonymous]
-        [HttpPut("/configuration/{id}")]
+        [HttpPut("{id}/configuration")]
         public async Task<IActionResult> UpdateConfiguration(Guid id, [FromBody] Dtos.Post.Configuration configuration)
         {
             var success = _configurationService.UpdateAsync(id, configuration);
-            return Ok();
+            return Ok(success);
         }
 
 
