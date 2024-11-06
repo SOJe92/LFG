@@ -6,6 +6,8 @@ using Keyword = SearchAndRescue.User.Dtos.Base.Keyword;
 using PointOfInterest = SearchAndRescue.User.Dtos.Base.PointOfInterest;
 using Role = SearchAndRescue.User.Dtos.Base.Role;
 using SectorService = SearchAndRescue.User.Dtos.Base.SectorService;
+using UserBase = SearchAndRescue.User.Dtos.Base.User;
+using ChildUser = SearchAndRescue.User.Dtos.Base.ChildUser;
 
 namespace SearchAndRescue.User.Database
 {
@@ -22,6 +24,10 @@ namespace SearchAndRescue.User.Database
             CreateMap<Dtos.Base.Setting, Models.Setting>();
             CreateMap<Models.Setting, Dtos.Base.Setting>();
 
+            CreateMap<UserBase, Models.User>();
+            CreateMap<Models.User, UserBase>();
+            CreateMap<ChildUser, Models.ChildUser>();
+            CreateMap<Models.ChildUser, ChildUser>();
             CreateMap<ContactType, Models.ContactType>();
             CreateMap<Models.ContactType, ContactType>();
             CreateMap<Dtos.Base.Entity, Models.Entity>();

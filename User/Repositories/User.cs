@@ -35,7 +35,26 @@ namespace SearchAndRescue.User.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<Database.Models.Keyword>> GetKeywordsAsync(Database.Models.Keyword keyword)
+        public async Task<Database.Models.User> GetAsync(Database.Models.User user)
+        {
+            string idCol = "id";
+            PostgresDataAccess.BuildGetQuery(new Database.Models.User(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            IEnumerable<Database.Models.User>? users = await _dbService.ExecuteQueryAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+
+            return users.First();
+        }
+
+        public async Task<Guid> AddAsync(Database.Models.User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteAsync(Database.Models.User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Database.Models.Keyword>> GetKeywordsAsync(Guid userId)
         {
             string idCol = "user_id";
             PostgresDataAccess.BuildGetQuery(new Database.Models.Keyword(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -63,7 +82,7 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Database.Models.ContactType>> GetContactTypesAsync(Database.Models.ContactType contactType)
+        public async Task<IEnumerable<Database.Models.ContactType>> GetContactTypesAsync(Guid userId)
         {
             string idCol = "user_id";
             PostgresDataAccess.BuildGetQuery(new Database.Models.ContactType(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -82,7 +101,7 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Database.Models.Entity>> GetEntitiesAsync(Database.Models.Entity entity)
+        public async Task<IEnumerable<Database.Models.Entity>> GetEntitiesAsync(Guid userId)
         {
             string idCol = "user_id";
             PostgresDataAccess.BuildGetQuery(new Database.Models.Entity(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -119,7 +138,7 @@ namespace SearchAndRescue.User.Repositories
             return favourites.First();
         }
 
-        public async Task<IEnumerable<Database.Models.Favourite>> GetFavouritesAsync(Database.Models.Favourite favouritw)
+        public async Task<IEnumerable<Database.Models.Favourite>> GetFavouritesAsync(Guid userId)
         {
             string idCol = "user_id";
             PostgresDataAccess.BuildGetQuery(new Database.Models.Favourite(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -138,7 +157,7 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Database.Models.Feature>> GetFeaturesAsync(Database.Models.Feature feature)
+        public async Task<IEnumerable<Database.Models.Feature>> GetFeaturesAsync(Guid userId)
         {
             string idCol = "user_id";
             PostgresDataAccess.BuildGetQuery(new Database.Models.Feature(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -170,7 +189,7 @@ namespace SearchAndRescue.User.Repositories
             return pois.First();
         }
 
-        public async Task<IEnumerable<Database.Models.PointOfInterest>> GetPointOfInterestsAsync(Database.Models.PointOfInterest poi)
+        public async Task<IEnumerable<Database.Models.PointOfInterest>> GetPointOfInterestsAsync(Guid userId)
         {
             string idCol = "user_id";
             PostgresDataAccess.BuildGetQuery(new Database.Models.PointOfInterest(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -189,7 +208,7 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Database.Models.Role> GetRoleAsync(Database.Models.Role role)
+        public async Task<Database.Models.Role> GetRoleAsync(Guid userId)
         {
             string[] idCol = { "user_id", "role_id" };
             PostgresDataAccess.BuildGetQuery(new Database.Models.Role(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -203,35 +222,35 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Database.Models.User>> GetUsersAsync(Database.Models.User user)
+        public async Task<IEnumerable<Database.Models.ChildUser>> GetUsersAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.User(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.User>? users = await _dbService.ExecuteQueryAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(new Database.Models.ChildUser(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            IEnumerable<Database.Models.ChildUser>? users = await _dbService.ExecuteQueryAsync<Database.Models.ChildUser>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
             return users;
         }
 
-        public async Task<Database.Models.User> GetUserAsync(Database.Models.User user)
+        public async Task<Database.Models.ChildUser> GetUserAsync(Database.Models.ChildUser user)
         {
             string[] idCol = { "user_id", "child_user_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.User(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.User>? users = await _dbService.ExecuteQueryAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(new Database.Models.ChildUser(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            IEnumerable<Database.Models.ChildUser>? users = await _dbService.ExecuteQueryAsync<Database.Models.ChildUser>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
             return users.First();
         }
 
-        public async Task<Guid> AddUserAsync(Database.Models.User user)
+        public async Task<Guid> AddUserAsync(Database.Models.ChildUser user)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteUserAsync(Database.Models.User user)
+        public async Task<bool> DeleteUserAsync(Database.Models.ChildUser user)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Database.Models.SectorService>> GetSectorServicesAsync(Database.Models.SectorService sectorService)
+        public async Task<IEnumerable<Database.Models.SectorService>> GetSectorServicesAsync(Guid userId)
         {
             string idCol = "user_id";
             PostgresDataAccess.BuildGetQuery(new Database.Models.SectorService(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
@@ -268,7 +287,7 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Database.Models.Setting> GetSettingAsync(Database.Models.Setting setting)
+        public async Task<Database.Models.Setting> GetSettingsAsync(Guid id)
         {
             string[] idCol = { "user_id", "setting_id" };
             PostgresDataAccess.BuildGetQuery(new Database.Models.Setting(), out string tableName, out string columns, out DynamicParameters parameters, idCol);

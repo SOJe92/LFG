@@ -1,9 +1,17 @@
 ﻿using SearchAndRescue.User.Contracts.Services;
+using IRepo = SearchAndRescue.User.Contracts.Repositories.IUser;
 
 namespace SearchAndRescue.User.Services
 {
     public class User : IUser
     {
+        private readonly IRepo _repo;
+        public User(IRepo repo)
+        {
+            _repo = repo;
+
+         }
+
         public Task<Guid> AddContactTypeAsync(Dtos.Post.ContactType contactType)
         {
             throw new NotImplementedException();

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IConfiguration = SearchAndRescue.User.Contracts.Services.IConfiguration;
-using IRepository = SearchAndRescue.User.Contracts.Repositories.IConfiguration;
+using IRepository = SearchAndRescue.User.Contracts.Repositories.IUser;
 
 namespace SearchAndRescue.User.Services
 {
@@ -21,7 +21,7 @@ namespace SearchAndRescue.User.Services
             configuration.Settings = _mapper.Map<Dtos.Base.Setting>(await _repo.GetSettingsAsync(id));
             configuration.ContactTypes = _mapper.Map<IEnumerable<Dtos.Base.ContactType>>(await _repo.GetContactTypesAsync(id));
             configuration.PointOfInterests = _mapper.Map<IEnumerable<Dtos.Base.PointOfInterest>>(await _repo.GetPointOfInterestsAsync(id));
-            configuration.Entities = _mapper.Map<IEnumerable<Dtos.Base.Entity>>(await _repo.GetEntitesAsync(id));
+            configuration.Entities = _mapper.Map<IEnumerable<Dtos.Base.Entity>>(await _repo.GetEntitiesAsync(id));
             configuration.Favourites = _mapper.Map<IEnumerable<Dtos.Base.Favourite>>(await _repo.GetFavouritesAsync(id));
             configuration.Features = _mapper.Map<IEnumerable<Dtos.Base.Feature>>(await _repo.GetFeaturesAsync(id));
             configuration.Keywords = _mapper.Map<IEnumerable<Dtos.Base.Keyword>>(await _repo.GetKeywordsAsync(id));
@@ -33,7 +33,7 @@ namespace SearchAndRescue.User.Services
 
         public async Task<bool> UpdateAsync(Guid id, Dtos.Post.Configuration config)
         {
-            var result = await _repo.SetAsync(id, _mapper.Map<Database.Models.Setting>(config));
+            var result = await _repo.UpdateSettingsAsync(_mapper.Map<Database.Models.Setting>(config));
             return result;
         }
     }
