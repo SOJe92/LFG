@@ -1,60 +1,49 @@
-﻿using AutoMapper;
-using Dapper;
+﻿using Dapper;
 using SearchAndRescue.Core.Database.Contracts;
 using SearchAndRescue.Entity.Contracts.Repositories;
-using SearchAndRescue.Entity.Database;
 using SearchAndRescue.Helpers;
-using System.Data;
 
 namespace SearchAndRescue.Entity.Repositories
 {
     public class Entity : IEntity
     {
-        private readonly IMapper _mapper;
         private readonly IDbService _dbService;
 
-        public Entity(IMapper mapper, IDbService dbService)
+        public Entity(IDbService dbService)
         {
-            _mapper = mapper;
             _dbService = dbService;
         }
 
         public async Task<int> Add(Database.Models.Entity entity)
         {
-            PostgresDataAccess.BuildQuery(entity, out string tableName, out string columns, out string parameters);
-            PostgresDataAccess.BuildParams(entity, out DynamicParameters parametersModel);
-            var result = await _dbService.SetData($"INSERT INTO {tableName} ({columns}) VALUES ({parameters});", parametersModel);
+            PostgresDataAccess.BuildQuery(entity, out string tableName, out string columns, out string parameters, out DynamicParameters parametersModel);
+            int result = await _dbService.SetData(Core.Database.Queries.Insert(columns, tableName, parameters), parametersModel);
 
             return result;
         }
 
         public async Task<bool> Delete(Guid id)
         {
-            var param = new DynamicParameters();
-            param.Add("id", id);
-            PostgresDataAccess.BuildDeleteQueryParams(new Database.Models.Entity { Id = id }, out string columns);
-            var count = await _dbService.ExecuteFunctionAsync(Queries.Delete(columns), param);
+            DynamicParameters? param = new DynamicParameters();
+            param.Add("pid", id);
+            PostgresDataAccess.BuildDeleteQuery(new Database.Models.Entity { Id = id }, out string tableName);
+            int count = await _dbService.ExecuteFunctionAsync(Core.Database.Queries.DeleteById(tableName, "id"), param);
             return count > 0;
         }
 
         public async Task<Database.Models.Entity> Get(Guid id)
         {
-            var param = new DynamicParameters();
-            param.Add("id", id);
-            PostgresDataAccess.BuildQuery<Database.Models.Entity>(out string tableName, out string columns);
-            var entity = await _dbService.ExecuteQueryAsync<Database.Models.Entity>(Queries.Get(columns), param);
+            PostgresDataAccess.BuildGetQuery(new Database.Models.Entity(), out string tableName, out string columns, out DynamicParameters parameters, "id");
+            IEnumerable<Database.Models.Entity>? entity = await _dbService.ExecuteQueryAsync<Database.Models.Entity>(Core.Database.Queries.Get(columns, tableName), parameters);
 
             return entity.FirstOrDefault();
         }
 
         public async Task<bool> Update(Database.Models.Entity entity)
         {
-            var param = new DynamicParameters();
-            param.Add("id", entity.Id);
-
             PostgresDataAccess.BuildUpdateQuery(entity, out string tableName, out string columns);
 
-            var result = await _dbService.SetData($"UPDATE {tableName} SET {columns} WHERE id = @id;", entity);
+            int result = await _dbService.SetData(Core.Database.Queries.UpdateById(columns, tableName, "id"), entity);
 
             return result > 0;
         }

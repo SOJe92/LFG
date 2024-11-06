@@ -7,7 +7,7 @@ namespace SearchAndRescue.User.Dtos.Base
     {
         public User() => Configuration = new();
 
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string? Username { get; set; } = null;
 
@@ -21,28 +21,28 @@ namespace SearchAndRescue.User.Dtos.Base
 
         public DateTime? LastLogin { get; set; }
 
-        public string Address1 { get; set; }
+        public string? Address1 { get; set; }
 
-        public string Address2 { get; set; }
+        public string? Address2 { get; set; }
 
-        public string City { get; set; }
+        public string? City { get; set; }
 
-        public string Region { get; set; }
+        public string? Region { get; set; }
 
-        public string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
 
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
-        public string Locale { get; set; }
+        public string? Locale { get; set; }
 
-        public string Image { get; set; }
+        public string? Image { get; set; }
 
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
-        public long X { get; set; }
+        public long? X { get; set; }
 
-        public long Y { get; set; }
+        public long? Y { get; set; }
 
-        public Configuration Configuration { get; set; }
+        public Configuration? Configuration { get; set; }
     }
 }

@@ -24,10 +24,13 @@ namespace SearchAndRescue.User.Services
         public async Task<Dtos.Get.User> Authenticate(Dtos.Post.User login)
         {
             Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
-            userRegistration = await _repository.GetAsync(userRegistration);
+            userRegistration = await _repository.GetByEmailAsync(userRegistration);
             Dtos.Get.User loginUser = _mapper.Map<Dtos.Get.User>(userRegistration);
-            loginUser.Configuration = await _config.GetAsync(loginUser.Id);
-
+            if (!loginUser.Id.HasValue)
+            {
+                loginUser.Id = await Register(login);
+            }
+            loginUser.Configuration = await _config.GetAsync(loginUser.Id.Value);
             return loginUser;
         }
 
@@ -42,7 +45,7 @@ namespace SearchAndRescue.User.Services
             Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
             userRegistration = await _repository.GetAsync(userRegistration);
             Dtos.Get.User loginUser = _mapper.Map<Dtos.Get.User>(userRegistration);
-            loginUser.Configuration = await _config.GetAsync(loginUser.Id);
+            loginUser.Configuration = await _config.GetAsync(loginUser.Id.Value);
             return loginUser;
         }
     }

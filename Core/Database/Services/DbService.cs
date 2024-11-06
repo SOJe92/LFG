@@ -132,5 +132,33 @@ namespace SearchAndRescue.Core.Database.Services
                 throw;
             }
         }
+
+        public async Task<T> ExecuteQueryFirstAsync<T>(string command, DynamicParameters parameters)
+        {
+            try
+            {
+                using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
+                var result = await dbConnection.QueryFirstAsync<T>(command, parameters);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<Guid> ExecuteInsertAsync(string command, DynamicParameters parameters)
+        {
+            try
+            {
+                using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
+                var result = await dbConnection.QueryFirstAsync<Guid>(command, parameters);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

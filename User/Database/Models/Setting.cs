@@ -3,16 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.User.Database.Models
 {
-    [Table("settings.user")]
+    [Table("lookup.usersettings")]
     public record Setting : DbEntity
     {
-        [Column("locationx")]
-        public long LocationX { get; set; }
+        [Column("user_id")]
+        public Guid UserId { get; set; }
 
-        [Column("locationy")]
-        public long LocationY { get; set; }
-
-        [Column("budget")]
-        public int[] Budget { get; set; }
+        [Column("settings_id")]
+        public Guid SettingId { get; set; }
     }
 }

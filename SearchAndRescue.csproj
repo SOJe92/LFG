@@ -22,14 +22,19 @@
 
   <ItemGroup>
     <Compile Remove="Template\**" />
+    <Compile Remove="User\Controllers\Template\**" />
     <Compile Remove="_Template\**" />
     <Content Remove="Template\**" />
+    <Content Remove="User\Controllers\Template\**" />
     <Content Remove="_Template\**" />
     <EmbeddedResource Remove="Template\**" />
+    <EmbeddedResource Remove="User\Controllers\Template\**" />
     <EmbeddedResource Remove="_Template\**" />
     <None Remove="Template\**" />
+    <None Remove="User\Controllers\Template\**" />
     <None Remove="_Template\**" />
     <TypeScriptCompile Remove="Template\**" />
+    <TypeScriptCompile Remove="User\Controllers\Template\**" />
     <TypeScriptCompile Remove="_Template\**" />
   </ItemGroup>
 

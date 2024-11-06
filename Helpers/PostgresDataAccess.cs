@@ -18,6 +18,63 @@ namespace SearchAndRescue.Helpers
             columnNames = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
             parameters = string.Join(", ", definedProperties.Select(p => $"@{p.GetCustomAttribute<ColumnAttribute>().Name}"));
         }
+        public static void BuildQuery<T>(T obj, out string tableName, out string columnNames, out string parameters, out DynamicParameters parametersModel, string? idColumn = null)
+        {
+            parametersModel = new();
+            Type type = typeof(T);
+            var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
+            var definedProperties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null && x.GetValue(obj) != null);
+            tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
+            columnNames = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+            parameters = string.Join(", ", definedProperties.Select(p => $"@{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+            if (idColumn != null)
+            {
+                foreach (var property in properties)
+                {
+                    ParameterDirection direction = ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(property, typeof(DapperParamDirectionAttribute))).Value;
+                    string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;
+                    var dbType = ConvertToDbType(property.PropertyType);
+                    var value = property.GetValue(obj);
+                    if (columnName == idColumn)
+                    {
+                        parametersModel.Add($"@p{columnName.Replace("_", "")}", value, dbType, direction);
+                    }
+                }
+            }
+        }
+        public static void BuildQuery<T>(T obj, out string tableName, out string columnNames, out string parameters, out DynamicParameters parametersModel, string[] idColumn)
+        {
+            parametersModel = new();
+            Type type = typeof(T);
+            var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
+            var definedProperties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null && x.GetValue(obj) != null);
+            tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
+            columnNames = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+            parameters = string.Join(", ", definedProperties.Select(p => $"@{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+            if (idColumn.Length > 0)
+            {
+                foreach (var property in properties)
+                {
+                    ParameterDirection direction = ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(property, typeof(DapperParamDirectionAttribute))).Value;
+                    string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;
+                    var dbType = ConvertToDbType(property.PropertyType);
+                    var value = property.GetValue(obj);
+                    if (idColumn.Contains(columnName))
+                    {
+                        parametersModel.Add($"@p{columnName.Replace("_", "")}", value, dbType, direction);
+                    }
+                }
+            }
+        }
+
+        public static void BuildGetQuery<T>(out string tableName, out string columns)
+        {
+            Type type = typeof(T);
+            var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
+            var definedProperties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
+            tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
+            columns = string.Join(", ", properties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name}"));
+        }
 
         public static void BuildGetQuery<T>(T obj, out string tableName, out string columns, out DynamicParameters parameters, string? idColumn = null)
         {
@@ -33,10 +90,11 @@ namespace SearchAndRescue.Helpers
                 {
                     ParameterDirection direction = ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(property, typeof(DapperParamDirectionAttribute))).Value;
                     string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;
+                    var dbType = ConvertToDbType(property.PropertyType);
                     var value = property.GetValue(obj);
                     if (columnName == idColumn)
                     {
-                        parameters.Add($"@{columnName}", value);
+                        parameters.Add($"@p{columnName.Replace("_", "")}", value, dbType, direction);
                     }
                 }
             }
@@ -56,10 +114,11 @@ namespace SearchAndRescue.Helpers
                 {
                     ParameterDirection direction = ((DapperParamDirectionAttribute)Attribute.GetCustomAttribute(property, typeof(DapperParamDirectionAttribute))).Value;
                     string columnName = ((ColumnAttribute)Attribute.GetCustomAttribute(property, typeof(ColumnAttribute))).Name;
+                    var dbType = ConvertToDbType(property.PropertyType);
                     var value = property.GetValue(obj);
                     if (idColumn.Contains(columnName))
                     {
-                        parameters.Add($"@{columnName}", value);
+                        parameters.Add($"@p{columnName.Replace("_", "")}", value, dbType, direction);
                     }
                 }
             }
@@ -73,7 +132,8 @@ namespace SearchAndRescue.Helpers
             tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
             setValues = string.Join(", ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name} = @{p.Name}"));
         }
-        public static void BuildDeleteQueryParams<T>(T obj, out string setValues)
+
+        public static void BuildDeleteQuery<T>(T obj, out string tableName)
         {
             Type type = typeof(T);
             var properties = type.GetProperties().Where(x => (ColumnAttribute?)Attribute.GetCustomAttribute(x, typeof(ColumnAttribute)) != null);
@@ -82,7 +142,7 @@ namespace SearchAndRescue.Helpers
                 object? objectValue = x.GetValue(obj);
                 return objectValue != null && !string.IsNullOrEmpty(objectValue.ToString()) && !Equals(objectValue, Guid.Empty);
             });
-            setValues = string.Join(" AND ", definedProperties.Select(p => $"{p.GetCustomAttribute<ColumnAttribute>().Name} = @{p.Name}"));
+            tableName = ((TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute))).Name;
         }
 
         public static void BuildQuery<T>(out string tableName, out string columnNames)

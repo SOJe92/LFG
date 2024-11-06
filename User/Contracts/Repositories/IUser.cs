@@ -3,6 +3,7 @@
     public interface IUser
     {
         Task<Database.Models.User> GetAsync(Database.Models.User user);
+        Task<Database.Models.User> GetByEmailAsync(Database.Models.User user);
         Task<Guid> AddAsync(Database.Models.User user);
         Task<bool> DeleteAsync(Database.Models.User user);
         Task<IEnumerable<Database.Models.Keyword>> GetKeywordsAsync(Guid userId);

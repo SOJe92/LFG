@@ -2,7 +2,6 @@
 {
     public static class Queries
     {
-        public static string GetUsers => "SELECT Username, Email FROM users";
 
         public static string TrySignin => "account.register_and_signin";
 

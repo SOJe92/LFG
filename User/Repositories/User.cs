@@ -35,30 +35,49 @@ namespace SearchAndRescue.User.Repositories
             return result;
         }
 
+        public async Task<Database.Models.User> GetByEmailAsync(Database.Models.User user)
+        {
+            string idCol = "email";
+            PostgresDataAccess.BuildGetQuery(user, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            user = await _dbService.ExecuteQueryFirstAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+
+            return user;
+        }
+
         public async Task<Database.Models.User> GetAsync(Database.Models.User user)
         {
             string idCol = "id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.User(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.User>? users = await _dbService.ExecuteQueryAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(user, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            user = await _dbService.ExecuteQueryFirstAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return users.First();
+            return user;
         }
 
         public async Task<Guid> AddAsync(Database.Models.User user)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildQuery(user, out string tableName, out string columns, out string parameters, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Core.Database.Queries.Insert(columns, tableName, parameters), parametersModel);
+            return id;
         }
 
         public async Task<bool> DeleteAsync(Database.Models.User user)
         {
-            throw new NotImplementedException();
+            string idCol = "id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", user.Id);
+            PostgresDataAccess.BuildDeleteQuery(user, out string tableName);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.DeleteById(tableName, idCol), paramModel);
+
+            return success;
         }
 
         public async Task<IEnumerable<Database.Models.Keyword>> GetKeywordsAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Keyword(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Keyword>? keywords = await _dbService.ExecuteQueryAsync<Database.Models.Keyword>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Keyword>(out string tableName, out string columns);
+            IEnumerable<Database.Models.Keyword>? keywords = await _dbService.ExecuteQueryAsync<Database.Models.Keyword>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return keywords;
         }
@@ -66,10 +85,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<Database.Models.Keyword> GetKeywordAsync(Database.Models.Keyword keyword)
         {
             string[] idCol = { "user_id", "keyword_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Keyword(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Keyword>? keywords = await _dbService.ExecuteQueryAsync<Database.Models.Keyword>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(keyword, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            keyword = await _dbService.ExecuteQueryFirstAsync<Database.Models.Keyword>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return keywords.First();
+            return keyword;
         }
 
         public async Task<Guid> AddKeywordAsync(Database.Models.Keyword keyword)
@@ -85,8 +104,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<IEnumerable<Database.Models.ContactType>> GetContactTypesAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.ContactType(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.ContactType>? contactTypes = await _dbService.ExecuteQueryAsync<Database.Models.ContactType>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.ContactType>(out string tableName, out string columns);
+            IEnumerable<Database.Models.ContactType>? contactTypes = await _dbService.ExecuteQueryAsync<Database.Models.ContactType>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return contactTypes;
         }
@@ -104,8 +125,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<IEnumerable<Database.Models.Entity>> GetEntitiesAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Entity(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Entity>? entities = await _dbService.ExecuteQueryAsync<Database.Models.Entity>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Entity>(out string tableName, out string columns);
+            IEnumerable<Database.Models.Entity>? entities = await _dbService.ExecuteQueryAsync<Database.Models.Entity>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return entities;
         }
@@ -113,10 +136,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<Database.Models.Entity> GetEntityAsync(Database.Models.Entity entity)
         {
             string[] idCol = { "user_id", "entity_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Entity(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Entity>? entities = await _dbService.ExecuteQueryAsync<Database.Models.Entity>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(entity, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            entity = await _dbService.ExecuteQueryFirstAsync<Database.Models.Entity>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return entities.First();
+            return entity;
         }
 
         public async Task<Guid> AddEntityAsync(Database.Models.Entity entity)
@@ -129,20 +152,22 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Database.Models.Favourite> GetFavouriteAsync(Database.Models.Favourite favouritw)
+        public async Task<Database.Models.Favourite> GetFavouriteAsync(Database.Models.Favourite favourite)
         {
             string[] idCol = { "user_id", "favourite_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Favourite(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Favourite>? favourites = await _dbService.ExecuteQueryAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(favourite, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            favourite = await _dbService.ExecuteQueryFirstAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return favourites.First();
+            return favourite;
         }
 
         public async Task<IEnumerable<Database.Models.Favourite>> GetFavouritesAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Favourite(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Favourite>? favourites = await _dbService.ExecuteQueryAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Favourite>(out string tableName, out string columns);
+            IEnumerable<Database.Models.Favourite>? favourites = await _dbService.ExecuteQueryAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return favourites;
         }
@@ -152,7 +177,7 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteFavouriteAsync(Database.Models.Favourite favouritw)
+        public async Task<bool> DeleteFavouriteAsync(Database.Models.Favourite favourite)
         {
             throw new NotImplementedException();
         }
@@ -160,8 +185,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<IEnumerable<Database.Models.Feature>> GetFeaturesAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Feature(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Feature>? features = await _dbService.ExecuteQueryAsync<Database.Models.Feature>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Feature>(out string tableName, out string columns);
+            IEnumerable<Database.Models.Feature>? features = await _dbService.ExecuteQueryAsync<Database.Models.Feature>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return features;
         }
@@ -169,10 +196,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<Database.Models.Feature> GetFeatureAsync(Database.Models.Feature feature)
         {
             string[] idCol = { "user_id", "feature_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Feature(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Feature>? features = await _dbService.ExecuteQueryAsync<Database.Models.Feature>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(feature, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            feature = await _dbService.ExecuteQueryFirstAsync<Database.Models.Feature>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return features.First();
+            return feature;
         }
 
         public async Task<Guid> UpdateFeatureAsync(Database.Models.Feature feature)
@@ -183,17 +210,19 @@ namespace SearchAndRescue.User.Repositories
         public async Task<Database.Models.PointOfInterest> GetPointOfInterestAsync(Database.Models.PointOfInterest poi)
         {
             string[] idCol = { "user_id", "poi_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.PointOfInterest(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.PointOfInterest>? pois = await _dbService.ExecuteQueryAsync<Database.Models.PointOfInterest>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(poi, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            poi = await _dbService.ExecuteQueryFirstAsync<Database.Models.PointOfInterest>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return pois.First();
+            return poi;
         }
 
         public async Task<IEnumerable<Database.Models.PointOfInterest>> GetPointOfInterestsAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.PointOfInterest(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.PointOfInterest>? pois = await _dbService.ExecuteQueryAsync<Database.Models.PointOfInterest>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.PointOfInterest>(out string tableName, out string columns);
+            IEnumerable<Database.Models.PointOfInterest>? pois = await _dbService.ExecuteQueryAsync<Database.Models.PointOfInterest>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return pois;
         }
@@ -210,11 +239,13 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Database.Models.Role> GetRoleAsync(Guid userId)
         {
-            string[] idCol = { "user_id", "role_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Role(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Role>? roles = await _dbService.ExecuteQueryAsync<Database.Models.Role>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            string idCol = "user_id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Role>(out string tableName, out string columns);
+            Database.Models.Role role = await _dbService.ExecuteQueryFirstAsync<Database.Models.Role>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
-            return roles.First();
+            return role;
         }
 
         public async Task<bool> SetRoleAsync(Database.Models.Role role)
@@ -225,8 +256,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<IEnumerable<Database.Models.ChildUser>> GetUsersAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.ChildUser(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.ChildUser>? users = await _dbService.ExecuteQueryAsync<Database.Models.ChildUser>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.ChildUser>(out string tableName, out string columns);
+            IEnumerable<Database.Models.ChildUser>? users = await _dbService.ExecuteQueryAsync<Database.Models.ChildUser>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return users;
         }
@@ -234,10 +267,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<Database.Models.ChildUser> GetUserAsync(Database.Models.ChildUser user)
         {
             string[] idCol = { "user_id", "child_user_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.ChildUser(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.ChildUser>? users = await _dbService.ExecuteQueryAsync<Database.Models.ChildUser>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(user, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            user = await _dbService.ExecuteQueryFirstAsync<Database.Models.ChildUser>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return users.First();
+            return user;
         }
 
         public async Task<Guid> AddUserAsync(Database.Models.ChildUser user)
@@ -253,8 +286,10 @@ namespace SearchAndRescue.User.Repositories
         public async Task<IEnumerable<Database.Models.SectorService>> GetSectorServicesAsync(Guid userId)
         {
             string idCol = "user_id";
-            PostgresDataAccess.BuildGetQuery(new Database.Models.SectorService(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.SectorService>? sectorServices = await _dbService.ExecuteQueryAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.SectorService>(out string tableName, out string columns);
+            IEnumerable<Database.Models.SectorService>? sectorServices = await _dbService.ExecuteQueryAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return sectorServices;
         }
@@ -262,19 +297,19 @@ namespace SearchAndRescue.User.Repositories
         public async Task<Database.Models.SectorService> GetSectorAsync(Database.Models.SectorService sectorService)
         {
             string[] idCol = { "user_id", "sector_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.SectorService(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.SectorService>? sectorServices = await _dbService.ExecuteQueryAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(sectorService, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            sectorService = await _dbService.ExecuteQueryFirstAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return sectorServices.First();
+            return sectorService;
         }
 
         public async Task<Database.Models.SectorService> GetSectorServiceAsync(Database.Models.SectorService sectorService)
         {
             string[] idCol = { "user_id", "sector_id", "service_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.SectorService(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.SectorService>? sectorServices = await _dbService.ExecuteQueryAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            PostgresDataAccess.BuildGetQuery(sectorService, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            sectorService = await _dbService.ExecuteQueryFirstAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
-            return sectorServices.First();
+            return sectorService;
         }
 
         public async Task<Guid> AddSectorServiceAsync(Database.Models.SectorService sectorService)
@@ -287,13 +322,15 @@ namespace SearchAndRescue.User.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Database.Models.Setting> GetSettingsAsync(Guid id)
+        public async Task<Database.Models.Setting> GetSettingsAsync(Guid userId)
         {
-            string[] idCol = { "user_id", "setting_id" };
-            PostgresDataAccess.BuildGetQuery(new Database.Models.Setting(), out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            IEnumerable<Database.Models.Setting>? settings = await _dbService.ExecuteQueryAsync<Database.Models.Setting>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            string idCol = "user_id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Setting>(out string tableName, out string columns);
+            Database.Models.Setting setting = await _dbService.ExecuteQueryFirstAsync<Database.Models.Setting>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
-            return settings.First();
+            return setting;
         }
 
         public async Task<Guid> CreateSettingsAsync(Database.Models.Setting setting)

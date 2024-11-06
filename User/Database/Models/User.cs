@@ -8,11 +8,11 @@ namespace SearchAndRescue.User.Database.Models
     public record User : DbEntity
     {
         [Column("username")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
+        [DapperParamDirection(System.Data.ParameterDirection.InputOutput)]
         public string Username { get; set; }
 
         [Column("email")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
+        [DapperParamDirection(System.Data.ParameterDirection.InputOutput)]
         public string Email { get; set; }
 
         [Column("is_master")]

@@ -32,7 +32,7 @@ namespace SearchAndRescue.Product.Repositories
         {
             var param = new DynamicParameters();
             param.Add("id", id);
-            PostgresDataAccess.BuildDeleteQueryParams(new Database.Models.Product { Id = id }, out string columns);
+            PostgresDataAccess.BuildDeleteQuery(new Database.Models.Product { Id = id }, out string columns);
             var count = await _dbService.ExecuteFunctionAsync(Queries.Delete(columns), param);
             return count > 0;
         }
