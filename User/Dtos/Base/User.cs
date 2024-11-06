@@ -5,7 +5,9 @@ namespace SearchAndRescue.User.Dtos.Base
     [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class User
     {
-        public Guid? Id { get; set; } = null;
+        public User() => Configuration = new();
+
+        public Guid Id { get; set; }
 
         public string? Username { get; set; } = null;
 
@@ -19,9 +21,9 @@ namespace SearchAndRescue.User.Dtos.Base
 
         public DateTime? LastLogin { get; set; }
 
-        public string Addr1 { get; set; }
+        public string Address1 { get; set; }
 
-        public string Addr2 { get; set; }
+        public string Address2 { get; set; }
 
         public string City { get; set; }
 

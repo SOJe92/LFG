@@ -4,28 +4,16 @@
     {
         public string? Name { get; set; }
 
-        public string? Reg { get; set; }
-
-        public string? Address1 { get; set; }
-
-        public string? Address2 { get; set; }
-
-        public string? City { get; set; }
-
-        public string? Region { get; set; }
-
-        public string? Postcode { get; set; }
-
-        public string? Country { get; set; }
-
-        public string? Phone { get; set; }
-
         public string? Description { get; set; }
 
-        public string? Image { get; set; } = null;
+        public string? Image { get; set; }
 
-        public Guid? SectorId { get; set; }
+        public float? Cost { get; set; }
 
-        public Guid? UserId { get; set; }
+        public long? X { get; set; }
+
+        public long? Y { get; set; }
+
+        public long? Timestamp { get; set; }
     }
 }

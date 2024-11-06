@@ -32,7 +32,7 @@ namespace SearchAndRescue.User.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Signin([FromBody] Dtos.Get.LoginUser login)
+        public async Task<IActionResult> Signin([FromBody] Dtos.Post.User login)
         {
             try
             {

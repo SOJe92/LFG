@@ -1,14 +1,11 @@
-﻿using SearchAndRescue.User.Dtos.Get;
-using SearchAndRescue.User.Dtos.Post;
-
-namespace SearchAndRescue.User.Contracts
+﻿namespace SearchAndRescue.User.Contracts
 {
     public interface ILogin
     {
-        Task<LoginUser> SignInAsync(LoginUser login);
+        Task<Dtos.Get.User> SignInAsync(Dtos.Post.User login);
 
-        Task<int> Register(Dtos.Post.User registration);
+        Task<Guid> Register(Dtos.Post.User registration);
 
-        Task<LoginUser> Authenticate(Dtos.Post.User login);
+        Task<Dtos.Get.User> Authenticate(Dtos.Post.User login);
     }
 }

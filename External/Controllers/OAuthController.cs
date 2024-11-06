@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SearchAndRescue.User.Contracts;
-using SearchAndRescue.User.Dtos.Get;
 
 namespace SearchAndRescue.External.Controllers
 {
@@ -18,7 +17,7 @@ namespace SearchAndRescue.External.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] User.Dtos.Post.User registration)
         {
-            LoginUser login = await _loginService.Authenticate(registration);
+            User.Dtos.Get.User login = await _loginService.Authenticate(registration);
             return Ok(login);
         }
     }

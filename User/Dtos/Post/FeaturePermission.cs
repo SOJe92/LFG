@@ -1,9 +1,7 @@
-﻿namespace SearchAndRescue.Configuration.Dtos.Get
+﻿namespace SearchAndRescue.User.Dtos.Post
 {
-    public class Feature
+    public class FeaturePermission
     {
-        public Guid Id { get; set; }
-
         public string Key { get; set; }
 
         public string Description { get; set; }

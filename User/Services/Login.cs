@@ -1,51 +1,63 @@
 ﻿using AutoMapper;
 using SearchAndRescue.User.Contracts;
-using SearchAndRescue.User.Contracts.Repositories;
-using SearchAndRescue.User.Dtos.Get;
+using IRepo = SearchAndRescue.User.Contracts.Repositories.IUser;
+using IService = SearchAndRescue.User.Contracts.Services.IUser;
 
 namespace SearchAndRescue.User.Services
 {
     public class Login : ILogin
     {
-        private readonly IUser _repository;
+        private readonly IRepo _repository;
         private readonly IMapper _mapper;
+        private readonly IService _service;
 
-        public Login(IMapper mapper, IUser repostory)
+        public Login(IMapper mapper, IRepo repostory, IService service)
         {
             _repository = repostory;
             _mapper = mapper;
+            _service = service;
         }
 
-        public async Task<LoginUser> Authenticate(Dtos.Post.User login)
+        public async Task<Dtos.Get.User> Authenticate(Dtos.Post.User login)
         {
             Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
-            var result = await _repository.TryGet(userRegistration);
-            LoginUser loginUser = _mapper.Map<LoginUser>(result);
-            if (loginUser.Id.HasValue)
-            {
-                loginUser.FeaturePermissions = await GetFeaturePermissionsAsync(loginUser.Id.Value);
-            }
+            userRegistration = await _repository.GetUserAsync(userRegistration);
+            Dtos.Get.User loginUser = _mapper.Map<Dtos.Get.User>(userRegistration);
+            loginUser.Configuration = await GetConfigurationAsync(loginUser.Id);
+
             return loginUser;
         }
 
-        public async Task<int> Register(Dtos.Post.User registration)
+        public async Task<Guid> Register(Dtos.Post.User registration)
         {
             Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(registration);
-            return await _repository.Create(userRegistration);
+            return await _repository.AddUserAsync(userRegistration);
         }
 
-        public async Task<LoginUser> SignInAsync(LoginUser login)
+        public async Task<Dtos.Get.User> SignInAsync(Dtos.Post.User login)
         {
-            Database.Models.User userLogin = _mapper.Map<Database.Models.User>(login);
-            userLogin = await _repository.Get(userLogin);
-            login = _mapper.Map<LoginUser>(userLogin);
-            return login;
+            Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
+            userRegistration = await _repository.GetUserAsync(userRegistration);
+            Dtos.Get.User loginUser = _mapper.Map<Dtos.Get.User>(userRegistration);
+            loginUser.Configuration = await GetConfigurationAsync(loginUser.Id);
+            return loginUser;
         }
 
-        private async Task<IEnumerable<FeaturePermission>> GetFeaturePermissionsAsync(Guid userid)
+        private async Task<Dtos.Get.Configuration> GetConfigurationAsync(Guid userId)
         {
-            IEnumerable<FeaturePermission> featurePermissions = _mapper.Map<IEnumerable<FeaturePermission>>(await _repository.GetFeaturePermissions(userid));
-            return featurePermissions;
+            Dtos.Get.Configuration config = new();
+            config.Features = await _service.GetFeaturesAsync(userId);
+            config.PointOfInterests = await _service.GetPointOfInterestsAsync(userId);
+            config.Entities = await _service.GetEntitiesAsync(userId);
+            config.ContactTypes = await _service.GetContactTypesAsync(userId);
+            config.Favourites = await _service.GetFavouritesAsync(userId);
+            config.Keywords = await _service.GetKeywordsAsync(userId);
+            config.Role = await _service.GetRoleAsync(userId);
+            config.Sectors = await _service.GetSectorServicesAsync(userId);
+            config.Settings = await _service.GetSettingAsync(userId);
+            config.Users = await _service.GetUsersAsync(userId);
+
+            return config;
         }
     }
 }

@@ -27,11 +27,11 @@ namespace SearchAndRescue.User.Database.Models
 
         [Column("addr1")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
-        public string Addr1 { get; set; }
+        public string Address1 { get; set; }
 
         [Column("addr2")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
-        public string Addr2 { get; set; }
+        public string Address2 { get; set; }
 
         [Column("city")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
