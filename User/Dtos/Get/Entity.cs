@@ -4,5 +4,6 @@ namespace SearchAndRescue.User.Dtos.Get
 {
     public class Entity : EntityBase
     {
+        public Guid Id { get; set; }
     }
 }

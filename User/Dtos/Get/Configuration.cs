@@ -4,5 +4,6 @@ namespace SearchAndRescue.User.Dtos.Get
 {
     public class Configuration : ConfigurationBase
     {
+        public Guid Id { get; set; }
     }
 }

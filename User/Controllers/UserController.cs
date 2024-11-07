@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SearchAndRescue.User.Contracts;
 using IConfiguration = SearchAndRescue.User.Contracts.Services.IConfiguration;
+using IService = SearchAndRescue.User.Contracts.Services.IUser;
 
 namespace SearchAndRescue.User.Controllers
 {
@@ -10,10 +11,12 @@ namespace SearchAndRescue.User.Controllers
     {
         private readonly ILogin _loginService;
         private readonly IConfiguration _configurationService;
-        public UserController(ILogin loginService, IConfiguration configurationService)
+        private readonly IService _service;
+        public UserController(ILogin loginService, IConfiguration configurationService, IService service)
         {
             _loginService = loginService;
             _configurationService = configurationService;
+            _service = service;
         }
 
         [HttpPost("register")]
@@ -43,6 +46,13 @@ namespace SearchAndRescue.User.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Dtos.Get.ChildUser user)
+        {
+            var config = _service.GetUserAsync(user);
+            return Ok(config);
         }
 
         [AllowAnonymous]

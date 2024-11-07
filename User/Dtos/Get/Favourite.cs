@@ -4,5 +4,6 @@ namespace SearchAndRescue.User.Dtos.Get
 {
     public class Favourite : FavouriteBase
     {
+        public Guid Id { get; set; }
     }
 }

@@ -2,12 +2,12 @@
 {
     public class Feature
     {
-        public Guid Id { get; set; }
 
-        public Guid UserId { get; set; }
 
-        public Guid FeatureId { get; set; }
+        public Guid? UserId { get; set; }
 
-        public bool Enabled { get; set; }
+        public Guid? FeatureId { get; set; }
+
+        public bool? Enabled { get; set; }
     }
 }

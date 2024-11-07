@@ -4,5 +4,6 @@ namespace SearchAndRescue.User.Dtos.Get
 {
     public class PointOfInterest : PointOfInterestBase
     {
+        public Guid Id { get; set; }
     }
 }

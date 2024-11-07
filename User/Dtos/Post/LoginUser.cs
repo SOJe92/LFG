@@ -8,7 +8,5 @@ namespace SearchAndRescue.User.Dtos.Post
     {
         [JsonProperty]
         public string DisplayName { get; set; }
-
-        public IEnumerable<FeaturePermission> FeaturePermissions { get; set; }
     }
 }

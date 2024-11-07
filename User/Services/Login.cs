@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using SearchAndRescue.User.Contracts;
+using IConfiguration = SearchAndRescue.User.Contracts.Services.IConfiguration;
 using IRepo = SearchAndRescue.User.Contracts.Repositories.IUser;
 using IService = SearchAndRescue.User.Contracts.Services.IUser;
-using IConfiguration = SearchAndRescue.User.Contracts.Services.IConfiguration;
 
 namespace SearchAndRescue.User.Services
 {
@@ -26,11 +26,8 @@ namespace SearchAndRescue.User.Services
             Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
             userRegistration = await _repository.GetByEmailAsync(userRegistration);
             Dtos.Get.User loginUser = _mapper.Map<Dtos.Get.User>(userRegistration);
-            if (!loginUser.Id.HasValue)
-            {
-                loginUser.Id = await Register(login);
-            }
-            loginUser.Configuration = await _config.GetAsync(loginUser.Id.Value);
+            loginUser.Id = await Register(login);
+            loginUser.Configuration = await _config.GetAsync(loginUser.Id);
             return loginUser;
         }
 
@@ -45,7 +42,7 @@ namespace SearchAndRescue.User.Services
             Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
             userRegistration = await _repository.GetAsync(userRegistration);
             Dtos.Get.User loginUser = _mapper.Map<Dtos.Get.User>(userRegistration);
-            loginUser.Configuration = await _config.GetAsync(loginUser.Id.Value);
+            loginUser.Configuration = await _config.GetAsync(loginUser.Id);
             return loginUser;
         }
     }

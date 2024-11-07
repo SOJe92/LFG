@@ -4,5 +4,6 @@ namespace SearchAndRescue.User.Dtos.Get
 {
     public class Keyword : KeywordBase
     {
+        public Guid Id { get; set; }
     }
 }

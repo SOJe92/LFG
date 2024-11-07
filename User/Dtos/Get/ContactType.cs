@@ -4,5 +4,6 @@ namespace SearchAndRescue.User.Dtos.Get
 {
     public class ContactType : ContactTypeBase
     {
+        public Guid Id { get; set; }
     }
 }

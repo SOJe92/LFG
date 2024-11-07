@@ -342,5 +342,25 @@ namespace SearchAndRescue.User.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<Database.Models.Product>> GetProductsAsync(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Database.Models.Product> GetProductAsync(Database.Models.Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Guid> AddProductAsync(Database.Models.Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteProductAsync(Database.Models.Product product)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

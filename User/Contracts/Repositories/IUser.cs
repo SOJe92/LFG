@@ -17,6 +17,10 @@
         Task<Database.Models.Entity> GetEntityAsync(Database.Models.Entity entity);
         Task<Guid> AddEntityAsync(Database.Models.Entity entity);
         Task<bool> DeleteEntityAsync(Database.Models.Entity entity);
+        Task<IEnumerable<Database.Models.Product>> GetProductsAsync(Guid userId);
+        Task<Database.Models.Product> GetProductAsync(Database.Models.Product product);
+        Task<Guid> AddProductAsync(Database.Models.Product product);
+        Task<bool> DeleteProductAsync(Database.Models.Product product);
         Task<Database.Models.Favourite> GetFavouriteAsync(Database.Models.Favourite favourite);
         Task<IEnumerable<Database.Models.Favourite>> GetFavouritesAsync(Guid userId);
         Task<Guid> AddFavouriteAsync(Database.Models.Favourite favourite);
