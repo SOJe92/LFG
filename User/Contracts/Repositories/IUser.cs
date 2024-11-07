@@ -27,7 +27,7 @@
         Task<bool> DeleteFavouriteAsync(Database.Models.Favourite favourite);
         Task<IEnumerable<Database.Models.Feature>> GetFeaturesAsync(Guid userId);
         Task<Database.Models.Feature> GetFeatureAsync(Database.Models.Feature feature);
-        Task<Guid> UpdateFeatureAsync(Database.Models.Feature feature);
+        Task<bool> UpdateFeatureAsync(Database.Models.Feature feature);
         Task<Database.Models.PointOfInterest> GetPointOfInterestAsync(Database.Models.PointOfInterest poi);
         Task<IEnumerable<Database.Models.PointOfInterest>> GetPointOfInterestsAsync(Guid userId);
         Task<Guid> AddPointOfInterestAsync(Database.Models.PointOfInterest poi);

@@ -158,12 +158,16 @@ namespace SearchAndRescue.User.Services
 
         public async Task<Dtos.Get.Entity> GetEntityAsync(Dtos.Get.Entity entity)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Entity>(entity);
+            var result = _mapper.Map<Dtos.Get.Entity>(await _repo.GetEntityAsync(model));
+            return result;
         }
 
         public async Task<Dtos.Get.Favourite> GetFavouriteAsync(Dtos.Get.Favourite favourite)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Favourite>(favourite);
+            var result = _mapper.Map<Dtos.Get.Favourite>(await _repo.GetFavouriteAsync(model));
+            return result;
         }
 
         public async Task<IEnumerable<Dtos.Get.Favourite>> GetFavouritesAsync(Guid userId)
@@ -174,7 +178,9 @@ namespace SearchAndRescue.User.Services
 
         public async Task<Dtos.Get.Feature> GetFeatureAsync(Dtos.Get.Feature feature)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Feature>(feature);
+            var result = _mapper.Map<Dtos.Get.Feature>(await _repo.GetFeatureAsync(model));
+            return result;
         }
 
         public async Task<IEnumerable<Dtos.Get.Feature>> GetFeaturesAsync(Guid userId)
@@ -185,7 +191,9 @@ namespace SearchAndRescue.User.Services
 
         public async Task<Dtos.Get.Keyword> GetKeywordAsync(Dtos.Get.Keyword keyword)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Keyword>(keyword);
+            var result = _mapper.Map<Dtos.Get.Keyword>(await _repo.GetKeywordAsync(model));
+            return result;
         }
 
         public async Task<IEnumerable<Dtos.Get.Keyword>> GetKeywordsAsync(Guid userId)
@@ -196,7 +204,9 @@ namespace SearchAndRescue.User.Services
 
         public async Task<Dtos.Get.PointOfInterest> GetPointOfInterestAsync(Dtos.Get.PointOfInterest poi)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.PointOfInterest>(poi);
+            var result = _mapper.Map<Dtos.Get.PointOfInterest>(await _repo.GetPointOfInterestAsync(model));
+            return result;
         }
 
         public async Task<IEnumerable<Dtos.Get.PointOfInterest>> GetPointOfInterestsAsync(Guid userId)
@@ -205,9 +215,11 @@ namespace SearchAndRescue.User.Services
             return result;
         }
 
-        public async Task<Dtos.Get.Entity> GetProductAsync(Dtos.Get.Product product)
+        public async Task<Dtos.Get.Product> GetProductAsync(Dtos.Get.Product product)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Product>(product);
+            var result = _mapper.Map<Dtos.Get.Product>(await _repo.GetProductAsync(model));
+            return result;
         }
 
         public async Task<IEnumerable<Dtos.Get.Product>> GetProductsAsync(Guid userId)
@@ -218,17 +230,22 @@ namespace SearchAndRescue.User.Services
 
         public async Task<Dtos.Get.Role> GetRoleAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var result = _mapper.Map<Dtos.Get.Role>(await _repo.GetRoleAsync(userId));
+            return result;
         }
 
         public async Task<Dtos.Get.SectorService> GetSectorAsync(Dtos.Get.SectorService sectorService)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.SectorService>(sectorService);
+            var result = _mapper.Map<Dtos.Get.SectorService>(await _repo.GetSectorAsync(model));
+            return result;
         }
 
         public async Task<Dtos.Get.SectorService> GetSectorServiceAsync(Dtos.Get.SectorService sectorService)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.SectorService>(sectorService);
+            var result = _mapper.Map<Dtos.Get.SectorService>(await _repo.GetSectorServiceAsync(model));
+            return result;
         }
 
         public async Task<IEnumerable<Dtos.Get.SectorService>> GetSectorServicesAsync(Guid userId)
@@ -237,14 +254,17 @@ namespace SearchAndRescue.User.Services
             return result;
         }
 
-        public async Task<Dtos.Get.Setting> GetSettingAsync(Dtos.Get.Setting setting)
+        public async Task<Dtos.Get.Setting> GetSettingAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var result = _mapper.Map<Dtos.Get.Setting>(await _repo.GetSettingsAsync(userId));
+            return result;
         }
 
-        public async Task<Dtos.Get.User> GetUserAsync(Dtos.Get.ChildUser user)
+        public async Task<Dtos.Get.ChildUser> GetUserAsync(Dtos.Get.ChildUser user)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.ChildUser>(user);
+            var result = _mapper.Map<Dtos.Get.ChildUser>(await _repo.GetUserAsync(model));
+            return result;
         }
 
         public async Task<IEnumerable<Dtos.Get.ChildUser>> GetUsersAsync(Guid userId)
@@ -255,17 +275,23 @@ namespace SearchAndRescue.User.Services
 
         public async Task<bool> SetRoleAsync(Dtos.Post.Role role)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Role>(role);
+            var result = await _repo.SetRoleAsync(model);
+            return result;
         }
 
-        public async Task<Guid> UpdateFeatureAsync(Dtos.Post.Feature feature)
+        public async Task<bool> UpdateFeatureAsync(Dtos.Post.Feature feature)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Feature>(feature);
+            var result = await _repo.UpdateFeatureAsync(model);
+            return result;
         }
 
         public async Task<bool> UpdateSettingsAsync(Dtos.Post.Setting setting)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<Database.Models.Setting>(setting);
+            var result = await _repo.UpdateSettingsAsync(model);
+            return result;
         }
     }
 }

@@ -147,12 +147,12 @@ namespace SearchAndRescue.Core.Database.Services
             }
         }
 
-        public async Task<Guid> ExecuteInsertAsync(string command, DynamicParameters parameters)
+        public async Task<T> ExecuteQueryFirstAsync<T>(string command, object parameters)
         {
             try
             {
                 using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
-                var result = await dbConnection.QueryFirstAsync<Guid>(command, parameters);
+                var result = await dbConnection.QueryFirstAsync<T>(command, parameters);
                 return result;
             }
             catch (Exception)

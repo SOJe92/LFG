@@ -51,7 +51,7 @@ namespace SearchAndRescue.User.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Dtos.Get.ChildUser user)
         {
-            var config = _service.GetUserAsync(user);
+            var config = await _service.GetUserAsync(user);
             return Ok(config);
         }
 

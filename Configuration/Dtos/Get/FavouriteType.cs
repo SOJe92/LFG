@@ -1,6 +1,6 @@
 ﻿namespace SearchAndRescue.Configuration.Dtos.Get
 {
-    public class EntityType
+    public class FavouriteType
     {
         public Guid Id { get; set; }
 

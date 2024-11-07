@@ -1,4 +1,5 @@
 ﻿using SearchAndRescue.Core.Database;
+using SearchAndRescue.Core.Database.Attributes;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.Configuration.Database.Models
@@ -7,6 +8,7 @@ namespace SearchAndRescue.Configuration.Database.Models
     public record EntityFavourites : DbEntity
     {
         [Column("entity_id")]
+        [DapperParamDirection(System.Data.ParameterDirection.InputOutput)]
         public Guid EntityId { get; set; }
     }
 }

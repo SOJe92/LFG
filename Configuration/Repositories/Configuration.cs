@@ -2,10 +2,11 @@
 using SearchAndRescue.Configuration.Database.Models;
 using SearchAndRescue.Core.Database.Contracts;
 using SearchAndRescue.Helpers;
+using IConfiguration = SearchAndRescue.Configuration.Contracts.Repositories.IConfiguration;
 
 namespace SearchAndRescue.Configuration.Repositories
 {
-    public class Configuration : Contracts.Repositories.IConfiguration
+    public class Configuration : IConfiguration
     {
         private readonly IDbService _dbService;
 
@@ -41,6 +42,14 @@ namespace SearchAndRescue.Configuration.Repositories
             var entityTypes = await _dbService.ExecuteQueryAsync<EntityType>(Core.Database.Queries.Get(columns, tableName), parameters);
 
             return entityTypes;
+        }
+
+        public async Task<IEnumerable<FavouriteType>> GetFavouriteTypesAsync()
+        {
+            PostgresDataAccess.BuildGetQuery(new FavouriteType(), out string tableName, out string columns, out DynamicParameters parameters);
+            var favouriteTypes = await _dbService.ExecuteQueryAsync<FavouriteType>(Core.Database.Queries.Get(columns, tableName), parameters);
+
+            return favouriteTypes;
         }
 
         public async Task<IEnumerable<Feature>> GetFeaturesAsync()

@@ -3,16 +3,18 @@ using SearchAndRescue.Core.Database.Contracts;
 using SearchAndRescue.Helpers;
 using SearchAndRescue.User.Contracts.Repositories;
 using SearchAndRescue.User.Database;
+using ISystemConfigRepo = SearchAndRescue.Configuration.Contracts.Repositories.IConfiguration;
 
 namespace SearchAndRescue.User.Repositories
 {
     public class User : IUser
     {
         private readonly IDbService _dbService;
-
-        public User(IDbService dbService)
+        private readonly ISystemConfigRepo _systemConfigRepo;
+        public User(IDbService dbService, ISystemConfigRepo systemConfigRepo)
         {
             _dbService = dbService;
+            _systemConfigRepo = systemConfigRepo;
         }
 
         public async Task<Database.Models.User> TryGet(Database.Models.User login)
@@ -93,12 +95,21 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> AddKeywordAsync(Database.Models.Keyword keyword)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(keyword, out DynamicParameters parametersModel);
+            Guid result = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddKeyword, parametersModel);
+
+            return result;
         }
 
         public async Task<bool> DeleteKeywordAsync(Database.Models.Keyword keyword)
         {
-            throw new NotImplementedException();
+            string idCol = "id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", keyword.Id);
+            PostgresDataAccess.BuildDeleteQuery(keyword, out string tableName);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.DeleteById(tableName, idCol), paramModel);
+
+            return success;
         }
 
         public async Task<IEnumerable<Database.Models.ContactType>> GetContactTypesAsync(Guid userId)
@@ -114,12 +125,21 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> AddContactTypeAsync(Database.Models.ContactType contactType)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(contactType, out DynamicParameters parametersModel);
+            var contactTypeId = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddContactType, parametersModel);
+
+            return contactTypeId;
         }
 
         public async Task<bool> DeleteContactTypeAsync(Database.Models.ContactType contactType)
         {
-            throw new NotImplementedException();
+            string idCol = "id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", contactType.Id);
+            PostgresDataAccess.BuildDeleteQuery(contactType, out string tableName);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.DeleteById(tableName, idCol), paramModel);
+
+            return success;
         }
 
         public async Task<IEnumerable<Database.Models.Entity>> GetEntitiesAsync(Guid userId)
@@ -144,12 +164,20 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> AddEntityAsync(Database.Models.Entity entity)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(entity, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddEntity, parametersModel);
+
+            return id;
         }
 
         public async Task<bool> DeleteEntityAsync(Database.Models.Entity entity)
         {
-            throw new NotImplementedException();
+            DynamicParameters paramModel = new();
+            paramModel.Add($"pid", entity.Id);
+            paramModel.Add($"pentityid", entity.EntityId);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.DeleteEntity, paramModel);
+
+            return success;
         }
 
         public async Task<Database.Models.Favourite> GetFavouriteAsync(Database.Models.Favourite favourite)
@@ -174,12 +202,21 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> AddFavouriteAsync(Database.Models.Favourite favourite)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(favourite, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddFavourite, parametersModel);
+
+            return id;
         }
 
         public async Task<bool> DeleteFavouriteAsync(Database.Models.Favourite favourite)
         {
-            throw new NotImplementedException();
+            DynamicParameters paramModel = new();
+            paramModel.Add($"pid", favourite.Id);
+            paramModel.Add($"pfavouriteid", favourite.FavouriteId);
+            paramModel.Add($"ptypeid", favourite.TypeId);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.DeleteFavourite, paramModel);
+
+            return success;
         }
 
         public async Task<IEnumerable<Database.Models.Feature>> GetFeaturesAsync(Guid userId)
@@ -202,9 +239,13 @@ namespace SearchAndRescue.User.Repositories
             return feature;
         }
 
-        public async Task<Guid> UpdateFeatureAsync(Database.Models.Feature feature)
+        public async Task<bool> UpdateFeatureAsync(Database.Models.Feature feature)
         {
-            throw new NotImplementedException();
+            string[] idCol = { "user_id", "feature_id" };
+            PostgresDataAccess.BuildUpdateQuery(feature, out string tableName, out string columns);
+            var success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, idCol), feature);
+
+            return success;
         }
 
         public async Task<Database.Models.PointOfInterest> GetPointOfInterestAsync(Database.Models.PointOfInterest poi)
@@ -229,12 +270,20 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> AddPointOfInterestAsync(Database.Models.PointOfInterest poi)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(poi, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddPOI, parametersModel);
+
+            return id;
         }
 
         public async Task<bool> DeletePointOfInterestAsync(Database.Models.PointOfInterest poi)
         {
-            throw new NotImplementedException();
+            DynamicParameters paramModel = new();
+            paramModel.Add($"pid", poi.Id);
+            paramModel.Add($"ppoid", poi.PointOfInterestId);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.DeletePOI, paramModel);
+
+            return success;
         }
 
         public async Task<Database.Models.Role> GetRoleAsync(Guid userId)
@@ -250,7 +299,11 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<bool> SetRoleAsync(Database.Models.Role role)
         {
-            throw new NotImplementedException();
+            DynamicParameters paramModel = new();
+            paramModel.Add($"puserid", role.UserId);
+            var success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.UpdateRole, paramModel);
+
+            return success;
         }
 
         public async Task<IEnumerable<Database.Models.ChildUser>> GetUsersAsync(Guid userId)
@@ -275,12 +328,21 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> AddUserAsync(Database.Models.ChildUser user)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(user, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddUser, parametersModel);
+
+            return id;
         }
 
         public async Task<bool> DeleteUserAsync(Database.Models.ChildUser user)
         {
-            throw new NotImplementedException();
+            string idCol = "id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", user.Id);
+            PostgresDataAccess.BuildDeleteQuery(user, out string tableName);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.DeleteById(tableName, idCol), paramModel);
+
+            return success;
         }
 
         public async Task<IEnumerable<Database.Models.SectorService>> GetSectorServicesAsync(Guid userId)
@@ -314,12 +376,21 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> AddSectorServiceAsync(Database.Models.SectorService sectorService)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(sectorService, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddSectorService, parametersModel);
+
+            return id;
         }
 
         public async Task<bool> DeleteSectorServiceAsync(Database.Models.SectorService sectorService)
         {
-            throw new NotImplementedException();
+            string idCol = "id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"p{idCol.Replace("_", "")}", sectorService.Id);
+            PostgresDataAccess.BuildDeleteQuery(sectorService, out string tableName);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.DeleteById(tableName, idCol), paramModel);
+
+            return success;
         }
 
         public async Task<Database.Models.Setting> GetSettingsAsync(Guid userId)
@@ -335,32 +406,47 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Guid> CreateSettingsAsync(Database.Models.Setting setting)
         {
-            throw new NotImplementedException();
+
+            PostgresDataAccess.BuildParams(setting, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.CreateSetting, parametersModel);
+            return id;
         }
 
         public async Task<bool> UpdateSettingsAsync(Database.Models.Setting setting)
         {
-            throw new NotImplementedException();
+            string[] idCol = { "user_id", "feature_id" };
+            PostgresDataAccess.BuildUpdateQuery(setting, out string tableName, out string columns);
+            var success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, idCol), setting);
+
+            return success;
         }
 
-        public Task<IEnumerable<Database.Models.Product>> GetProductsAsync(Guid userId)
+        public async Task<IEnumerable<Database.Models.Product>> GetProductsAsync(Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Database.Models.Product> GetProductAsync(Database.Models.Product product)
+        public async Task<Database.Models.Product> GetProductAsync(Database.Models.Product product)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Guid> AddProductAsync(Database.Models.Product product)
+        public async Task<Guid> AddProductAsync(Database.Models.Product product)
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildParams(product, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddProduct, parametersModel);
+
+            return id;
         }
 
-        public Task<bool> DeleteProductAsync(Database.Models.Product product)
+        public async Task<bool> DeleteProductAsync(Database.Models.Product product)
         {
-            throw new NotImplementedException();
+            DynamicParameters paramModel = new();
+            paramModel.Add($"pid", product.Id);
+            paramModel.Add($"pproductid", product.ProductId);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.DeleteProduct, paramModel);
+
+            return success;
         }
     }
 }

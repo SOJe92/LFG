@@ -16,6 +16,8 @@ namespace SearchAndRescue.Configuration.Database
             CreateMap<Models.EntityFavourites, Dtos.Get.EntityFavourites>();
             CreateMap<Dtos.Get.EntityType, Models.EntityType>();
             CreateMap<Models.EntityType, Dtos.Get.EntityType>();
+            CreateMap<Dtos.Get.FavouriteType, Models.FavouriteType>();
+            CreateMap<Models.FavouriteType, Dtos.Get.FavouriteType>();
             CreateMap<Dtos.Get.Feature, Models.Feature>();
             CreateMap<Models.Feature, Dtos.Get.Feature>();
             CreateMap<Dtos.Get.Keyword, Models.Keyword>();

@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.Configuration.Database.Models
 {
-    [Table("public.services")]
-    public record Service : DbEntity
+    [Table("public.favourite_type")]
+    public record FavouriteType : DbEntity
     {
         [Column("name")]
         [DapperParamDirection(System.Data.ParameterDirection.InputOutput)]

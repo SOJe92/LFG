@@ -13,5 +13,7 @@ namespace SearchAndRescue.Core.Database.Contracts
         Task<IEnumerable<T>> ExecuteQueryAsync<T>(string command, object parameters = null);
 
         Task<T> ExecuteQueryFirstAsync<T>(string command, DynamicParameters parameters);
+
+        Task<T> ExecuteQueryFirstAsync<T>(string command, object parameters);
     }
 }

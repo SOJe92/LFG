@@ -14,7 +14,7 @@
         Task<Guid> AddEntityAsync(Dtos.Post.Entity entity);
         Task<bool> DeleteEntityAsync(Guid userId, Guid id);
         Task<IEnumerable<Dtos.Get.Product>> GetProductsAsync(Guid userId);
-        Task<Dtos.Get.Entity> GetProductAsync(Dtos.Get.Product product);
+        Task<Dtos.Get.Product> GetProductAsync(Dtos.Get.Product product);
         Task<Guid> AddProductAsync(Dtos.Post.Product product);
         Task<bool> DeleteProductAsync(Guid userId, Guid id);
         Task<Dtos.Get.Favourite> GetFavouriteAsync(Dtos.Get.Favourite favourite);
@@ -23,7 +23,7 @@
         Task<bool> DeleteFavouriteAsync(Guid id);
         Task<IEnumerable<Dtos.Get.Feature>> GetFeaturesAsync(Guid userId);
         Task<Dtos.Get.Feature> GetFeatureAsync(Dtos.Get.Feature feature);
-        Task<Guid> UpdateFeatureAsync(Dtos.Post.Feature feature);
+        Task<bool> UpdateFeatureAsync(Dtos.Post.Feature feature);
         Task<Dtos.Get.PointOfInterest> GetPointOfInterestAsync(Dtos.Get.PointOfInterest poi);
         Task<IEnumerable<Dtos.Get.PointOfInterest>> GetPointOfInterestsAsync(Guid userId);
         Task<Guid> AddPointOfInterestAsync(Dtos.Post.PointOfInterest poi);
@@ -31,7 +31,7 @@
         Task<Dtos.Get.Role> GetRoleAsync(Guid userId);
         Task<bool> SetRoleAsync(Dtos.Post.Role role);
         Task<IEnumerable<Dtos.Get.ChildUser>> GetUsersAsync(Guid userId);
-        Task<Dtos.Get.User> GetUserAsync(Dtos.Get.ChildUser user);
+        Task<Dtos.Get.ChildUser> GetUserAsync(Dtos.Get.ChildUser user);
         Task<Guid> AddUserAsync(Dtos.Post.ChildUser user);
         Task<bool> DeleteUserAsync(Guid id);
         Task<IEnumerable<Dtos.Get.SectorService>> GetSectorServicesAsync(Guid userId);
@@ -39,7 +39,7 @@
         Task<Dtos.Get.SectorService> GetSectorServiceAsync(Dtos.Get.SectorService sectorService);
         Task<Guid> AddSectorServiceAsync(Dtos.Post.SectorService sectorService);
         Task<bool> DeleteSectorServiceAsync(Guid id);
-        Task<Dtos.Get.Setting> GetSettingAsync(Dtos.Get.Setting setting);
+        Task<Dtos.Get.Setting> GetSettingAsync(Guid userId);
         Task<Guid> CreateSettingsAsync(Dtos.Post.Setting setting);
         Task<bool> UpdateSettingsAsync(Dtos.Post.Setting setting);
     }
