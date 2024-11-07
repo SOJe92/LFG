@@ -35,6 +35,20 @@ namespace SearchAndRescue.User.Services
             return result;
         }
 
+        public async Task<Guid> AddFavouriteEntityAsync(Dtos.Post.Favourite favourite)
+        {
+            var model = _mapper.Map<Database.Models.Favourite>(favourite);
+            var result = await _repo.AddFavouriteEntityAsync(model);
+            return result;
+        }
+
+        public async Task<Guid> AddFavouriteProductAsync(Dtos.Post.Favourite favourite)
+        {
+            var model = _mapper.Map<Database.Models.Favourite>(favourite);
+            var result = await _repo.AddFavouriteProductAsync(model);
+            return result;
+        }
+
         public async Task<Guid> AddKeywordAsync(Dtos.Post.Keyword keyword)
         {
             var model = _mapper.Map<Database.Models.Keyword>(keyword);
@@ -99,6 +113,22 @@ namespace SearchAndRescue.User.Services
             Database.Models.Favourite model = new();
             model.Id = id;
             var result = await _repo.DeleteFavouriteAsync(model);
+            return result;
+        }
+
+        public async Task<bool> DeleteFavouriteEntityAsync(Guid id)
+        {
+            Database.Models.Favourite model = new();
+            model.Id = id;
+            var result = await _repo.DeleteFavouriteEntityAsync(model);
+            return result;
+        }
+
+        public async Task<bool> DeleteFavouriteProductAsync(Guid id)
+        {
+            Database.Models.Favourite model = new();
+            model.Id = id;
+            var result = await _repo.DeleteFavouriteProductAsync(model);
             return result;
         }
 
@@ -170,9 +200,35 @@ namespace SearchAndRescue.User.Services
             return result;
         }
 
+        public async Task<Dtos.Get.Favourite> GetFavouriteEntityAsync(Dtos.Get.Favourite favourite)
+        {
+            var model = _mapper.Map<Database.Models.Favourite>(favourite);
+            var result = _mapper.Map<Dtos.Get.Favourite>(await _repo.GetFavouriteEntityAsync(model));
+            return result;
+        }
+
+        public async Task<IEnumerable<Dtos.Get.Favourite>> GetFavouriteProductsAsync(Guid userId)
+        {
+            var result = _mapper.Map<IEnumerable<Dtos.Get.Favourite>>(await _repo.GetFavouriteProductsAsync(userId));
+            return result;
+        }
+
+        public async Task<IEnumerable<Dtos.Get.Favourite>> GetFavouriteEntitiesAsync(Guid userId)
+        {
+            var result = _mapper.Map<IEnumerable<Dtos.Get.Favourite>>(await _repo.GetFavouriteEntitiesAsync(userId));
+            return result;
+        }
+
         public async Task<IEnumerable<Dtos.Get.Favourite>> GetFavouritesAsync(Guid userId)
         {
-            var result = _mapper.Map<IEnumerable<Dtos.Get.Favourite>>(await _repo.GetContactTypesAsync(userId));
+            var result = _mapper.Map<IEnumerable<Dtos.Get.Favourite>>(await _repo.GetFavouritesAsync(userId));
+            return result;
+        }
+
+        public async Task<Dtos.Get.Favourite> GetFavouriteProductAsync(Dtos.Get.Favourite favourite)
+        {
+            var model = _mapper.Map<Database.Models.Favourite>(favourite);
+            var result = _mapper.Map<Dtos.Get.Favourite>(await _repo.GetFavouriteProductAsync(model));
             return result;
         }
 

@@ -3,6 +3,7 @@ using SearchAndRescue.Core.Database.Contracts;
 using SearchAndRescue.Helpers;
 using SearchAndRescue.User.Contracts.Repositories;
 using SearchAndRescue.User.Database;
+using SearchAndRescue.User.Database.Models;
 using ISystemConfigRepo = SearchAndRescue.Configuration.Contracts.Repositories.IConfiguration;
 
 namespace SearchAndRescue.User.Repositories
@@ -360,21 +361,21 @@ namespace SearchAndRescue.User.Repositories
         {
             string[] idCol = { "user_id", "sector_id" };
             PostgresDataAccess.BuildGetQuery(sectorService, out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            sectorService = await _dbService.ExecuteQueryFirstAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            sectorService = await _dbService.ExecuteQueryFirstAsync<SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
             return sectorService;
         }
 
-        public async Task<Database.Models.SectorService> GetSectorServiceAsync(Database.Models.SectorService sectorService)
+        public async Task<SectorService> GetSectorServiceAsync(SectorService sectorService)
         {
             string[] idCol = { "user_id", "sector_id", "service_id" };
             PostgresDataAccess.BuildGetQuery(sectorService, out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            sectorService = await _dbService.ExecuteQueryFirstAsync<Database.Models.SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            sectorService = await _dbService.ExecuteQueryFirstAsync<SectorService>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
             return sectorService;
         }
 
-        public async Task<Guid> AddSectorServiceAsync(Database.Models.SectorService sectorService)
+        public async Task<Guid> AddSectorServiceAsync(SectorService sectorService)
         {
             PostgresDataAccess.BuildParams(sectorService, out DynamicParameters parametersModel);
             Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddSectorService, parametersModel);
@@ -382,7 +383,7 @@ namespace SearchAndRescue.User.Repositories
             return id;
         }
 
-        public async Task<bool> DeleteSectorServiceAsync(Database.Models.SectorService sectorService)
+        public async Task<bool> DeleteSectorServiceAsync(SectorService sectorService)
         {
             string idCol = "id";
             DynamicParameters paramModel = new();
@@ -393,18 +394,18 @@ namespace SearchAndRescue.User.Repositories
             return success;
         }
 
-        public async Task<Database.Models.Setting> GetSettingsAsync(Guid userId)
+        public async Task<Setting> GetSettingsAsync(Guid userId)
         {
             string idCol = "user_id";
             DynamicParameters paramModel = new();
             paramModel.Add($"p{idCol.Replace("_", "")}", userId);
-            PostgresDataAccess.BuildGetQuery<Database.Models.Setting>(out string tableName, out string columns);
-            Database.Models.Setting setting = await _dbService.ExecuteQueryFirstAsync<Database.Models.Setting>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
+            PostgresDataAccess.BuildGetQuery<Setting>(out string tableName, out string columns);
+            Setting setting = await _dbService.ExecuteQueryFirstAsync<Database.Models.Setting>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return setting;
         }
 
-        public async Task<Guid> CreateSettingsAsync(Database.Models.Setting setting)
+        public async Task<Guid> CreateSettingsAsync(Setting setting)
         {
 
             PostgresDataAccess.BuildParams(setting, out DynamicParameters parametersModel);
@@ -412,7 +413,7 @@ namespace SearchAndRescue.User.Repositories
             return id;
         }
 
-        public async Task<bool> UpdateSettingsAsync(Database.Models.Setting setting)
+        public async Task<bool> UpdateSettingsAsync(Setting setting)
         {
             string[] idCol = { "user_id", "feature_id" };
             PostgresDataAccess.BuildUpdateQuery(setting, out string tableName, out string columns);
@@ -447,6 +448,84 @@ namespace SearchAndRescue.User.Repositories
             bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.DeleteProduct, paramModel);
 
             return success;
+        }
+
+        public async Task<Guid> AddFavouriteEntityAsync(Database.Models.Favourite favourite)
+        {
+            PostgresDataAccess.BuildParams(favourite, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddFavouriteEntity, parametersModel);
+
+            return id;
+        }
+
+        public async Task<Guid> AddFavouriteProductAsync(Database.Models.Favourite favourite)
+        {
+            PostgresDataAccess.BuildParams(favourite, out DynamicParameters parametersModel);
+            Guid id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddFavouriteProduct, parametersModel);
+
+            return id;
+        }
+
+        public async Task<bool> DeleteFavouriteEntityAsync(Database.Models.Favourite favourite)
+        {
+            DynamicParameters paramModel = new();
+            paramModel.Add($"pid", favourite.Id);
+            paramModel.Add($"pfavouriteid", favourite.FavouriteId);
+            paramModel.Add($"ptypeid", favourite.TypeId);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.DeleteFavouriteEntity, paramModel);
+
+            return success;
+        }
+
+        public async Task<bool> DeleteFavouriteProductAsync(Database.Models.Favourite favourite)
+        {
+            DynamicParameters paramModel = new();
+            paramModel.Add($"pid", favourite.Id);
+            paramModel.Add($"pfavouriteid", favourite.FavouriteId);
+            paramModel.Add($"ptypeid", favourite.TypeId);
+            bool success = await _dbService.ExecuteQueryFirstAsync<bool>(Queries.DeleteFavouriteProduct, paramModel);
+
+            return success;
+        }
+
+        public async Task<Database.Models.Favourite> GetFavouriteProductAsync(Database.Models.Favourite favourite)
+        {
+            string[] idCol = { "user_id", "favourite_id" };
+            PostgresDataAccess.BuildGetQuery(favourite, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            favourite = await _dbService.ExecuteQueryFirstAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+
+            return favourite;
+        }
+
+        public async Task<Database.Models.Favourite> GetFavouriteEntityAsync(Database.Models.Favourite favourite)
+        {
+            string[] idCol = { "user_id", "favourite_id" };
+            PostgresDataAccess.BuildGetQuery(favourite, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            favourite = await _dbService.ExecuteQueryFirstAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+
+            return favourite;
+        }
+
+        public async Task<IEnumerable<Database.Models.Favourite>> GetFavouriteProductsAsync(Guid userId)
+        {
+            string idCol = "user_id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"puserid", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Favourite>(out string tableName, out string columns);
+            IEnumerable<Database.Models.Favourite>? favourites = await _dbService.ExecuteQueryAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
+
+            return favourites;
+        }
+
+        public async Task<IEnumerable<Database.Models.Favourite>> GetFavouriteEntitiesAsync(Guid userId)
+        {
+            string idCol = "user_id";
+            DynamicParameters paramModel = new();
+            paramModel.Add($"puserid", userId);
+            PostgresDataAccess.BuildGetQuery<Database.Models.Favourite>(out string tableName, out string columns);
+            IEnumerable<Database.Models.Favourite>? favourites = await _dbService.ExecuteQueryAsync<Database.Models.Favourite>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
+
+            return favourites;
         }
     }
 }

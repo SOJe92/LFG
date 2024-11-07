@@ -21,21 +21,46 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Favourite\Contracts\Repositories\**" />
+    <Compile Remove="Favourite\Controllers\**" />
+    <Compile Remove="Favourite\Database\**" />
     <Compile Remove="Template\**" />
     <Compile Remove="User\Controllers\Template\**" />
     <Compile Remove="_Template\**" />
+    <Content Remove="Favourite\Contracts\Repositories\**" />
+    <Content Remove="Favourite\Controllers\**" />
+    <Content Remove="Favourite\Database\**" />
     <Content Remove="Template\**" />
     <Content Remove="User\Controllers\Template\**" />
     <Content Remove="_Template\**" />
+    <EmbeddedResource Remove="Favourite\Contracts\Repositories\**" />
+    <EmbeddedResource Remove="Favourite\Controllers\**" />
+    <EmbeddedResource Remove="Favourite\Database\**" />
     <EmbeddedResource Remove="Template\**" />
     <EmbeddedResource Remove="User\Controllers\Template\**" />
     <EmbeddedResource Remove="_Template\**" />
+    <None Remove="Favourite\Contracts\Repositories\**" />
+    <None Remove="Favourite\Controllers\**" />
+    <None Remove="Favourite\Database\**" />
     <None Remove="Template\**" />
     <None Remove="User\Controllers\Template\**" />
     <None Remove="_Template\**" />
+    <TypeScriptCompile Remove="Favourite\Contracts\Repositories\**" />
+    <TypeScriptCompile Remove="Favourite\Controllers\**" />
+    <TypeScriptCompile Remove="Favourite\Database\**" />
     <TypeScriptCompile Remove="Template\**" />
     <TypeScriptCompile Remove="User\Controllers\Template\**" />
     <TypeScriptCompile Remove="_Template\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Favourite\Contracts\Repositories\IFavourite.cs" />
+    <Compile Include="Favourite\Controllers\FavouriteController.cs" />
+    <Compile Include="Favourite\Database\MappingProfile.cs" />
+    <Compile Include="Favourite\Database\Models\EntityFavourite.cs" />
+    <Compile Include="Favourite\Database\Models\FavouriteType.cs" />
+    <Compile Include="Favourite\Database\Models\ProductFavourite.cs" />
+    <Compile Include="Favourite\Database\Models\UserFavourite.cs" />
   </ItemGroup>
 
   <ItemGroup>

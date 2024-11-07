@@ -2,8 +2,8 @@
 {
     public static class Queries
     {
-        public static string Get(string columns) => $"SELECT {columns} FROM private.entity WHERE id = @id";
+        public static string AddFavouriteEntity => "public.add_favourite_entity";
 
-        public static string Delete(string parameters) => $"DELETE FROM private.entity WHERE {parameters}";
+        public static string DeleteFavouriteEntity => "public.delete_favourite_product";
     }
 }

@@ -22,9 +22,17 @@
         Task<Guid> AddProductAsync(Database.Models.Product product);
         Task<bool> DeleteProductAsync(Database.Models.Product product);
         Task<Database.Models.Favourite> GetFavouriteAsync(Database.Models.Favourite favourite);
+        Task<Database.Models.Favourite> GetFavouriteProductAsync(Database.Models.Favourite favourite);
+        Task<Database.Models.Favourite> GetFavouriteEntityAsync(Database.Models.Favourite favourite);
         Task<IEnumerable<Database.Models.Favourite>> GetFavouritesAsync(Guid userId);
+        Task<IEnumerable<Database.Models.Favourite>> GetFavouriteProductsAsync(Guid userId);
+        Task<IEnumerable<Database.Models.Favourite>> GetFavouriteEntitiesAsync(Guid userId);
         Task<Guid> AddFavouriteAsync(Database.Models.Favourite favourite);
+        Task<Guid> AddFavouriteEntityAsync(Database.Models.Favourite favourite);
+        Task<Guid> AddFavouriteProductAsync(Database.Models.Favourite favourite);
         Task<bool> DeleteFavouriteAsync(Database.Models.Favourite favourite);
+        Task<bool> DeleteFavouriteEntityAsync(Database.Models.Favourite favourite);
+        Task<bool> DeleteFavouriteProductAsync(Database.Models.Favourite favourite);
         Task<IEnumerable<Database.Models.Feature>> GetFeaturesAsync(Guid userId);
         Task<Database.Models.Feature> GetFeatureAsync(Database.Models.Feature feature);
         Task<bool> UpdateFeatureAsync(Database.Models.Feature feature);

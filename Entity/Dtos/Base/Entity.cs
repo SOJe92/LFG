@@ -23,9 +23,5 @@
         public string? Description { get; set; }
 
         public string? Image { get; set; } = null;
-
-        public Guid? SectorId { get; set; }
-
-        public Guid? UserId { get; set; }
     }
 }

@@ -21,6 +21,14 @@
         Task<IEnumerable<Dtos.Get.Favourite>> GetFavouritesAsync(Guid userId);
         Task<Guid> AddFavouriteAsync(Dtos.Post.Favourite favourite);
         Task<bool> DeleteFavouriteAsync(Guid id);
+        Task<Dtos.Get.Favourite> GetFavouriteProductAsync(Dtos.Get.Favourite favourite);
+        Task<IEnumerable<Dtos.Get.Favourite>> GetFavouriteProductsAsync(Guid userId);
+        Task<Guid> AddFavouriteProductAsync(Dtos.Post.Favourite favourite);
+        Task<bool> DeleteFavouriteProductAsync(Guid id);
+        Task<Dtos.Get.Favourite> GetFavouriteEntityAsync(Dtos.Get.Favourite favourite);
+        Task<IEnumerable<Dtos.Get.Favourite>> GetFavouriteEntitiesAsync(Guid userId);
+        Task<Guid> AddFavouriteEntityAsync(Dtos.Post.Favourite favourite);
+        Task<bool> DeleteFavouriteEntityAsync(Guid id);
         Task<IEnumerable<Dtos.Get.Feature>> GetFeaturesAsync(Guid userId);
         Task<Dtos.Get.Feature> GetFeatureAsync(Dtos.Get.Feature feature);
         Task<bool> UpdateFeatureAsync(Dtos.Post.Feature feature);

@@ -4,9 +4,9 @@
 
 namespace SearchAndRescue.User.Controllers
 {
-    [Route("api/user/{userId}/[controller]")]
+    [Route("api/user/{userId}/keyword")]
     [ApiController]
-    public class KeywordController : ControllerBase
+    public class UserKeywordController : ControllerBase
     {
         // GET: api/<KeywordController>
         [HttpGet]
