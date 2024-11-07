@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SearchAndRescue.Configuration.Dtos.Get;
+using SearchAndRescue.Favourite.Contracts.Services;
 using IConfigurationRepository = SearchAndRescue.Configuration.Contracts.Repositories.IConfiguration;
 
 namespace SearchAndRescue.Configuration.Services
@@ -8,6 +9,7 @@ namespace SearchAndRescue.Configuration.Services
     {
         private readonly IConfigurationRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IFavourite _favourite;
 
         public Configuration(IConfigurationRepository repo, IMapper mapper)
         {
@@ -30,6 +32,7 @@ namespace SearchAndRescue.Configuration.Services
             configuration.Keywords = _mapper.Map<IEnumerable<Keyword>>(await _repo.GetKeywordsAsync());
             configuration.Roles = _mapper.Map<IEnumerable<Role>>(await _repo.GetRolesAsync());
             configuration.SectorServices = _mapper.Map<IEnumerable<SectorService>>(await _repo.GetSectorServicesAsync());
+            configuration.FavouriteTypes = _mapper.Map<IEnumerable<Favourite.Dtos.Get.FavouriteType>>(await _favourite.GetFavouriteTypesAsync());
 
             return configuration;
         }

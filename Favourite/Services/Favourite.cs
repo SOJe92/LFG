@@ -35,7 +35,8 @@ namespace SearchAndRescue.Favourite.Services
 
         public async Task<bool> DeleteProductFavouriteAsync(ProductFavourite productFavourite)
         {
-            throw new NotImplementedException();
+            Database.Models.UserFavourite model = _mapper.Map<Database.Models.UserFavourite>(productFavourite);
+            return await _repo.DeleteProductFavouriteAsync(model);
         }
 
         public async Task<Dtos.Get.EntityFavourite> GetEntityFavouriteAsync(Dtos.Get.EntityFavourite entityFavourite)
@@ -63,6 +64,12 @@ namespace SearchAndRescue.Favourite.Services
             Database.Models.FavouriteType? model = _mapper.Map<Database.Models.FavouriteType>(favouriteType);
             Database.Models.FavouriteType? result = await _repo.GetFavouriteTypeAsync(model);
             return _mapper.Map<Dtos.Get.FavouriteType>(result);
+        }
+
+        public IEnumerable<FavouriteType> GetFavouriteTypes()
+        {
+            IEnumerable<Database.Models.FavouriteType>? result = _repo.GetFavouriteTypes();
+            return _mapper.Map<IEnumerable<Dtos.Get.FavouriteType>>(result);
         }
 
         public async Task<IEnumerable<Dtos.Get.FavouriteType>> GetFavouriteTypesAsync()

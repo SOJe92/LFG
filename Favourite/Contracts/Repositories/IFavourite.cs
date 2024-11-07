@@ -14,6 +14,7 @@
         Task<bool> DeleteProductFavouriteAsync(Database.Models.UserFavourite productFavourite);
 
         Task<IEnumerable<Database.Models.FavouriteType>> GetFavouriteTypesAsync();
+        IEnumerable<Database.Models.FavouriteType> GetFavouriteTypes();
         Task<Database.Models.FavouriteType> GetFavouriteTypeAsync(Database.Models.FavouriteType favouriteType);
     }
 }

@@ -160,5 +160,19 @@ namespace SearchAndRescue.Core.Database.Services
                 throw;
             }
         }
+
+        public IEnumerable<T> ExecuteQuery<T>(string command, object parameters = null)
+        {
+            try
+            {
+                using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
+                var result = dbConnection.Query<T>(command, parameters);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

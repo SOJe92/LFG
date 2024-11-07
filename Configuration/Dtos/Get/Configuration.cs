@@ -14,5 +14,7 @@
         public IEnumerable<Sector> Sectors { get; set; }
         public IEnumerable<SectorService> SectorServices { get; set; }
         public IEnumerable<Service> Services { get; set; }
+
+        public IEnumerable<Favourite.Dtos.Get.FavouriteType> FavouriteTypes { get; set; }
     }
 }

@@ -79,6 +79,14 @@ namespace SearchAndRescue.Favourite.Repositories
             return favouriteType;
         }
 
+        public IEnumerable<FavouriteType> GetFavouriteTypes()
+        {
+            PostgresDataAccess.BuildGetQuery(new FavouriteType(), out string tableName, out string columns, out DynamicParameters parameters);
+            var favouriteTypes = _dbService.ExecuteQuery<FavouriteType>(Core.Database.Queries.Get(columns, tableName), parameters);
+
+            return favouriteTypes;
+        }
+
         public async Task<IEnumerable<FavouriteType>> GetFavouriteTypesAsync()
         {
             PostgresDataAccess.BuildGetQuery(new FavouriteType(), out string tableName, out string columns, out DynamicParameters parameters);
