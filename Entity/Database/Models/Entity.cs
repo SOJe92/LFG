@@ -1,15 +1,12 @@
-﻿using SearchAndRescue.Core.Database.Attributes;
+﻿using SearchAndRescue.Core.Database;
+using SearchAndRescue.Core.Database.Attributes;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.Entity.Database.Models
 {
-    [Table("private.entity")]
-    public class Entity
+    [Table("public.entities")]
+    public record Entity : DbEntity
     {
-        [Column("id")]
-        [DapperParamDirection(System.Data.ParameterDirection.InputOutput)]
-        public Guid? Id { get; set; }
-
         [Column("name")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
         public string Name { get; set; }
@@ -53,13 +50,5 @@ namespace SearchAndRescue.Entity.Database.Models
         [Column("image")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
         public string Image { get; set; }
-
-        [Column("sector_id")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
-        public Guid SectorId { get; set; }
-
-        [Column("user_id")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
-        public Guid UserId { get; set; }
     }
 }

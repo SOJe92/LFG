@@ -12,6 +12,8 @@ namespace SearchAndRescue.Entity.Database
             CreateMap<Models.Entity, Dtos.Get.Entity>();
             CreateMap<Dtos.Put.Entity, Models.Entity>();
             CreateMap<Models.Entity, Dtos.Put.Entity>();
+            CreateMap<Dtos.Get.EntityType, Models.EntityType>();
+            CreateMap<Models.EntityType, Dtos.Get.EntityType>();
         }
     }
 }

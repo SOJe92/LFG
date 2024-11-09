@@ -79,6 +79,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Configuration\Contracts\Repositories\" />
+    <Folder Include="Configuration\Repositories\" />
     <Folder Include="Core\Persistence\" />
     <Folder Include="Entities\Dtos\Post\" />
     <Folder Include="Entities\Dtos\Put\" />

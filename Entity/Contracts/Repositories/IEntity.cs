@@ -2,9 +2,11 @@
 {
     public interface IEntity
     {
-        Task<Database.Models.Entity> Get(Guid id);
-        Task<int> Add(Database.Models.Entity entity);
-        Task<bool> Update(Database.Models.Entity entity);
-        Task<bool> Delete(Guid id);
+        Task<Database.Models.Entity> GetAsync(Guid id);
+        Task<int> AddAsync(Database.Models.Entity entity);
+        Task<bool> UpdateAsync(Database.Models.Entity entity);
+        Task<bool> DeleteAsync(Guid id);
+        Task<IEnumerable<Database.Models.EntityType>> GetEntityTypesAsync();
+        Task<Database.Models.EntityType> GetEntityTypeAsync(Database.Models.EntityType entityType);
     }
 }

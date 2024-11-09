@@ -2,12 +2,14 @@
 {
     public interface IEntity
     {
-        Task<Dtos.Get.Entity> Get(Guid id);
+        Task<Dtos.Get.Entity> GetAsync(Guid id);
 
-        Task<int> Add(Dtos.Post.Entity entity);
+        Task<int> AddAsync(Dtos.Post.Entity entity);
 
-        Task<bool> Update(Dtos.Put.Entity entity);
+        Task<bool> UpdateAsync(Dtos.Put.Entity entity);
 
-        Task<bool> Delete(Guid id);
+        Task<bool> DeleteAsync(Guid id);
+        Task<IEnumerable<Dtos.Get.EntityType>> GetEntityTypesAsync();
+        Task<Dtos.Get.EntityType> GetEntityTypeAsync(Dtos.Get.EntityType entityType);
     }
 }

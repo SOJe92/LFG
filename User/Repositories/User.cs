@@ -4,18 +4,15 @@ using SearchAndRescue.Helpers;
 using SearchAndRescue.User.Contracts.Repositories;
 using SearchAndRescue.User.Database;
 using SearchAndRescue.User.Database.Models;
-using ISystemConfigRepo = SearchAndRescue.Configuration.Contracts.Repositories.IConfiguration;
 
 namespace SearchAndRescue.User.Repositories
 {
     public class User : IUser
     {
         private readonly IDbService _dbService;
-        private readonly ISystemConfigRepo _systemConfigRepo;
-        public User(IDbService dbService, ISystemConfigRepo systemConfigRepo)
+        public User(IDbService dbService)
         {
             _dbService = dbService;
-            _systemConfigRepo = systemConfigRepo;
         }
 
         public async Task<Database.Models.User> TryGet(Database.Models.User login)

@@ -50,13 +50,5 @@ namespace SearchAndRescue.Entities.Database.Models
         [Column("image")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
         public string Image { get; set; }
-
-        [Column("sector_id")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
-        public Guid SectorId { get; set; }
-
-        [Column("user_id")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
-        public Guid UserId { get; set; }
     }
 }

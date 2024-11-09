@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using SearchAndRescue.Core.Database.Contracts;
 using SearchAndRescue.Entity.Contracts.Repositories;
+using SearchAndRescue.Entity.Database.Models;
 using SearchAndRescue.Helpers;
 
 namespace SearchAndRescue.Entity.Repositories
@@ -14,7 +15,7 @@ namespace SearchAndRescue.Entity.Repositories
             _dbService = dbService;
         }
 
-        public async Task<int> Add(Database.Models.Entity entity)
+        public async Task<int> AddAsync(Database.Models.Entity entity)
         {
             PostgresDataAccess.BuildQuery(entity, out string tableName, out string columns, out string parameters, out DynamicParameters parametersModel);
             int result = await _dbService.SetData(Core.Database.Queries.Insert(columns, tableName, parameters), parametersModel);
@@ -22,7 +23,7 @@ namespace SearchAndRescue.Entity.Repositories
             return result;
         }
 
-        public async Task<bool> Delete(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             DynamicParameters? param = new DynamicParameters();
             param.Add("pid", id);
@@ -31,15 +32,31 @@ namespace SearchAndRescue.Entity.Repositories
             return count > 0;
         }
 
-        public async Task<Database.Models.Entity> Get(Guid id)
+        public async Task<Database.Models.Entity> GetAsync(Guid id)
         {
             PostgresDataAccess.BuildGetQuery(new Database.Models.Entity(), out string tableName, out string columns, out DynamicParameters parameters, "id");
-            IEnumerable<Database.Models.Entity>? entity = await _dbService.ExecuteQueryAsync<Database.Models.Entity>(Core.Database.Queries.Get(columns, tableName), parameters);
+           Database.Models.Entity entity = await _dbService.ExecuteQueryFirstAsync<Database.Models.Entity>(Core.Database.Queries.Get(columns, tableName), parameters);
 
-            return entity.FirstOrDefault();
+            return entity;
         }
 
-        public async Task<bool> Update(Database.Models.Entity entity)
+        public async Task<EntityType> GetEntityTypeAsync(EntityType entityType)
+        {
+            PostgresDataAccess.BuildGetQuery(entityType, out string tableName, out string columns, out DynamicParameters parameters);
+            var categories = await _dbService.ExecuteQueryFirstAsync<Database.Models.EntityType>(Core.Database.Queries.Get(columns, tableName), parameters);
+
+            return categories;
+        }
+
+        public async Task<IEnumerable<EntityType>> GetEntityTypesAsync()
+        {
+            PostgresDataAccess.BuildGetQuery(new Database.Models.EntityType(), out string tableName, out string columns, out DynamicParameters parameters);
+            var categories = await _dbService.ExecuteQueryAsync<Database.Models.EntityType>(Core.Database.Queries.Get(columns, tableName), parameters);
+
+            return categories;
+        }
+
+        public async Task<bool> UpdateAsync(Database.Models.Entity entity)
         {
             PostgresDataAccess.BuildUpdateQuery(entity, out string tableName, out string columns);
 
