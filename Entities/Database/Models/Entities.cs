@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.Entities.Database.Models
 {
-    [Table("private.entity")]
+    [Table("public.entities")]
     public record Entities : DbEntity
     {
         [Column("name")]

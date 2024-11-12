@@ -6,17 +6,19 @@
     using SearchAndRescue.Search.Dtos;
     using SearchAndRescue.Search.Services;
     using SearchAndRescue.User.Contracts;
+    using AdminService = Admin.Services.Admin;
     using CategoryService = Category.Services.Category;
-    using ContactTypeService = ContactType.Services.ContactType;
     using ConfigurationService = Configuration.Services.Configuration;
+    using ContactTypeService = ContactType.Services.ContactType;
     using EntitiesService = Entities.Services.Entities;
     using EntityService = Entity.Services.Entity;
     using ExternalUserService = External.Services.User;
     using FavouriteService = Favourite.Services.Favourite;
     using FeatureService = Feature.Services.Feature;
+    using IAdminService = Admin.Contracts.Services.IAdmin;
     using ICategoryService = Category.Contracts.Services.ICategory;
-    using IContactTypeService = ContactType.Contracts.Services.IContactType;
     using IConfigurationService = Configuration.Contracts.Services.IConfiguration;
+    using IContactTypeService = ContactType.Contracts.Services.IContactType;
     using IEntitiesService = Entities.Contracts.Services.IEntities;
     using IEntityService = Entity.Contracts.Services.IEntity;
     using IExternalUserService = External.Contracts.Services.IUser;
@@ -46,6 +48,7 @@
         {
             serviceCollection.AddSingleton<IDbService, DbService>();
             serviceCollection.AddSingleton(MapperConfig.Initialize());
+            serviceCollection.AddTransient<IAdminService, AdminService>();
             serviceCollection.AddTransient<ILogin, LoginService>();
             serviceCollection.AddTransient<ISearchResponseService<EntitiesSearchResult>, EntitySearchResponseService>();
             serviceCollection.AddTransient<ISearchResponseService<ProductsSearchResult>, ProductSearchResponseService>();

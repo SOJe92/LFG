@@ -44,6 +44,6 @@ namespace SearchAndRescue.User.Dtos.Base
 
         public long? Y { get; set; }
 
-        public Configuration Configuration { get; set; }
+        public Configuration? Configuration { get; set; }
     }
 }

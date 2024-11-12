@@ -24,8 +24,8 @@ namespace SearchAndRescue.User.Database
             CreateMap<Models.Entity, Dtos.Base.Entity>();
             CreateMap<Dtos.Base.Favourite, Models.Favourite>();
             CreateMap<Models.Favourite, Dtos.Base.Favourite>();
-            CreateMap<Dtos.Base.Feature, Models.Feature>();
-            CreateMap<Models.Feature, Dtos.Base.Feature>();
+            CreateMap<Dtos.Base.FeaturePermission, Models.FeaturePermission>();
+            CreateMap<Models.FeaturePermission, Dtos.Base.FeaturePermission>();
             CreateMap<Dtos.Base.Keyword, Models.Keyword>();
             CreateMap<Models.Keyword, Dtos.Base.Keyword>();
             CreateMap<Dtos.Base.PointOfInterest, Models.PointOfInterest>();
@@ -52,8 +52,8 @@ namespace SearchAndRescue.User.Database
             CreateMap<Models.Entity, Dtos.Get.Entity>();
             CreateMap<Dtos.Get.Favourite, Models.Favourite>();
             CreateMap<Models.Favourite, Dtos.Get.Favourite>();
-            CreateMap<Dtos.Get.Feature, Models.Feature>();
-            CreateMap<Models.Feature, Dtos.Get.Feature>();
+            CreateMap<Dtos.Get.Feature, Models.FeaturePermission>();
+            CreateMap<Models.FeaturePermission, Dtos.Get.Feature>();
             CreateMap<Dtos.Get.Keyword, Models.Keyword>();
             CreateMap<Models.Keyword, Dtos.Get.Keyword>();
             CreateMap<Dtos.Get.PointOfInterest, Models.PointOfInterest>();
@@ -78,8 +78,8 @@ namespace SearchAndRescue.User.Database
             CreateMap<Models.Entity, Dtos.Post.Entity>();
             CreateMap<Dtos.Post.Favourite, Models.Favourite>();
             CreateMap<Models.Favourite, Dtos.Post.Favourite>();
-            CreateMap<Dtos.Post.Feature, Models.Feature>();
-            CreateMap<Models.Feature, Dtos.Post.Feature>();
+            CreateMap<Dtos.Post.Feature, Models.FeaturePermission>();
+            CreateMap<Models.FeaturePermission, Dtos.Post.Feature>();
             CreateMap<Dtos.Post.Keyword, Models.Keyword>();
             CreateMap<Models.Keyword, Dtos.Post.Keyword>();
             CreateMap<Dtos.Post.PointOfInterest, Models.PointOfInterest>();

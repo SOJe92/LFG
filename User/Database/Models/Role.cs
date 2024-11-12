@@ -8,11 +8,11 @@ namespace SearchAndRescue.User.Database.Models
     public record Role : DbEntity
     {
         [Column("user_id")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
+        [DapperParamDirection(System.Data.ParameterDirection.InputOutput)]
         public Guid UserId { get; set; }
 
-        [Column("role_id")]
-        [DapperParamDirection(System.Data.ParameterDirection.Input)]
+        [Column("role_id", TypeName = "uuid")]
+        [DapperParamDirection(System.Data.ParameterDirection.InputOutput)]
         public Guid RoleId { get; set; }
     }
 }

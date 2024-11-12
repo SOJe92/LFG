@@ -2,7 +2,7 @@
 {
     public static class Queries
     {
-        public static string GetByUserId(string columns) => $"SELECT {columns} FROM public.get_entities(@puserid)";
-        public static string Get(string columns) => $"SELECT {columns} FROM public.get_entities()";
+        public static string GetByUserId => "public.get_entities(@puserid)";
+        public static string Get => "public.get_entities()";
     }
 }

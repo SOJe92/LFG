@@ -7,6 +7,8 @@
     using ExternalUserRepository = External.Repositories.User;
     using FavouriteRepository = Favourite.Repositories.Favourite;
     using FeatureRepository = Feature.Repositories.Feature;
+    using IAdminRepository = Admin.Contracts.Repositories.IAdmin;
+    using AdminRepository = Admin.Repositories.Admin;
     using ICategoryRepository = Category.Contracts.Repositories.ICategory;
     using IContactTypeRepository = ContactType.Contracts.Repositories.IContactType;
     using IEntitiesRepository = Entities.Contracts.Repositories.IEntities;
@@ -33,6 +35,7 @@
     {
         public static void RegisterRepositories(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient<IAdminRepository, AdminRepository>();
             serviceCollection.AddTransient<IUserRepository, UserRepository>();
             serviceCollection.AddTransient<IContactTypeRepository, ContactTypeRepository>();
             serviceCollection.AddTransient<IExternalUserRepository, ExternalUserRepository>();

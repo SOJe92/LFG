@@ -16,16 +16,18 @@ namespace SearchAndRescue.Products.Repositories
 
         public async Task<IEnumerable<Database.Models.Products>> GetAsync()
         {
-            throw new NotImplementedException();
+            PostgresDataAccess.BuildGetQuery(new Database.Models.Products(), out string tableName, out string columns, out DynamicParameters parameters);
+            var products = await _dbService.ExecuteQueryAsync<Database.Models.Products>(Core.Database.Queries.Get(columns, tableName), parameters);
+
+            return products;
         }
 
         public async Task<IEnumerable<Database.Models.Products>> GetAsync(Guid id)
         {
             var param = new DynamicParameters();
             param.Add("puserid", id);
-            PostgresDataAccess.BuildQuery<Database.Models.Products>(out _, out string columns);
-            var entities = await _dbService.ExecuteQueryAsync<Database.Models.Products>(Queries.GetByUserId(columns), param);
-            return entities;
+            var products = await _dbService.ExecuteQueryAsync<Database.Models.Products>(Queries.GetByUserId, param);
+            return products;
         }
     }
 }

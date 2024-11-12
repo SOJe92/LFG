@@ -1,7 +1,6 @@
 ﻿namespace SearchAndRescue.Helpers
 {
     using Microsoft.EntityFrameworkCore;
-    using SearchAndRescue.User.Dtos.Base;
 
     public class DataContext : DbContext
     {

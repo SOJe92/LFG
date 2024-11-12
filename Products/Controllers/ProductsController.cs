@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using IService = SearchAndRescue.Products.Contracts.Services.IProducts;
 
 namespace SearchAndRescue.Products.Controllers
 {
@@ -8,36 +7,22 @@ namespace SearchAndRescue.Products.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly IService _service;
+
+        public ProductsController(IService service) => _service = service;
+
         // GET: api/<ProductsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(await _service.GetAsync());
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return "value";
-        }
-
-        // POST api/<ProductsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ProductsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ProductsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok(await _service.GetAsync(id));
         }
     }
 }

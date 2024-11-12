@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using IService = SearchAndRescue.ContactType.Contracts.Services.IContactType;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,40 +9,29 @@ namespace SearchAndRescue.ContactType.Controllers
     [ApiController]
     public class ContactTypeController : ControllerBase
     {
+        private readonly IService _service;
+
+        public ContactTypeController(IService service)
+        {
+            _service = service;
+        }
+
         // GET: api/<TemplateController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return NotFound();
+            return Ok(await _service.GetContactTypesAsync());
         }
 
         // GET api/<TemplateController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return NotFound();
-        }
-
-        // POST api/<TemplateController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string value)
-        {
-            return NotFound();
-
-        }
-
-        // PUT api/<TemplateController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string value)
-        {
-            return NotFound();
-        }
-
-        // DELETE api/<TemplateController>/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            return NotFound();
+            Dtos.Get.ContactType contactType = new()
+            {
+                Id = id
+            };
+            return Ok(await _service.GetContactTypeAsync(contactType));
         }
     }
 }

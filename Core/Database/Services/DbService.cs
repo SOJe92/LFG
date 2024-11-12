@@ -138,8 +138,8 @@ namespace SearchAndRescue.Core.Database.Services
             try
             {
                 using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
-                var result = await dbConnection.QueryFirstAsync<T>(command, parameters);
-                return result;
+                var result = await dbConnection.QueryFirstOrDefaultAsync<T>(command, parameters);
+                return result ?? (T)Activator.CreateInstance(typeof(T));
             }
             catch (Exception)
             {
@@ -152,8 +152,8 @@ namespace SearchAndRescue.Core.Database.Services
             try
             {
                 using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
-                var result = await dbConnection.QueryFirstAsync<T>(command, parameters);
-                return result;
+                var result = await dbConnection.QueryFirstOrDefaultAsync<T>(command, parameters);
+                return result ?? (T)Activator.CreateInstance(typeof(T));
             }
             catch (Exception)
             {

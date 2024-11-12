@@ -65,9 +65,13 @@ namespace SearchAndRescue.Favourite.Repositories
             return entityFavourites;
         }
 
-        public Task<IEnumerable<EntityFavourite>> GetEntityFavouritesAsync(EntityFavourite entityFavourite)
+        public async Task<IEnumerable<EntityFavourite>> GetEntityFavouritesAsync(EntityFavourite entityFavourite)
         {
-            throw new NotImplementedException();
+            string idCol = "entity_id";
+            PostgresDataAccess.BuildGetQuery(entityFavourite, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            var entityFavourites = await _dbService.ExecuteQueryAsync<EntityFavourite>(Core.Database.Queries.Get(columns, tableName), parameters);
+
+            return entityFavourites;
         }
 
         public async Task<FavouriteType> GetFavouriteTypeAsync(FavouriteType favouriteType)
@@ -112,9 +116,13 @@ namespace SearchAndRescue.Favourite.Repositories
             return sectors;
         }
 
-        public Task<IEnumerable<ProductFavourite>> GetProductFavouritesAsync(ProductFavourite productFavourite)
+        public async Task<IEnumerable<ProductFavourite>> GetProductFavouritesAsync(ProductFavourite productFavourite)
         {
-            throw new NotImplementedException();
+            string idCol = "product_id";
+            PostgresDataAccess.BuildGetQuery(productFavourite, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            var entityFavourites = await _dbService.ExecuteQueryAsync<ProductFavourite>(Core.Database.Queries.Get(columns, tableName), parameters);
+
+            return entityFavourites;
         }
     }
 }

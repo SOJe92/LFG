@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using SearchAndRescue.Core.Database.Contracts;
+using SearchAndRescue.Extensions;
 using SearchAndRescue.Helpers;
 using SearchAndRescue.User.Contracts.Repositories;
 using SearchAndRescue.User.Database;
@@ -37,9 +38,9 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<Database.Models.User> GetByEmailAsync(Database.Models.User user)
         {
-            string idCol = "email";
+            string[] idCol = { "email", "username", "id" };
             PostgresDataAccess.BuildGetQuery(user, out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            user = await _dbService.ExecuteQueryFirstAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            user.Id = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.TrySignin, parameters);
 
             return user;
         }
@@ -217,27 +218,27 @@ namespace SearchAndRescue.User.Repositories
             return success;
         }
 
-        public async Task<IEnumerable<Database.Models.Feature>> GetFeaturesAsync(Guid userId)
+        public async Task<IEnumerable<Database.Models.FeaturePermission>> GetFeaturesAsync(Guid userId)
         {
             string idCol = "user_id";
             DynamicParameters paramModel = new();
             paramModel.Add($"p{idCol.Replace("_", "")}", userId);
-            PostgresDataAccess.BuildGetQuery<Database.Models.Feature>(out string tableName, out string columns);
-            IEnumerable<Database.Models.Feature>? features = await _dbService.ExecuteQueryAsync<Database.Models.Feature>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
+            PostgresDataAccess.BuildGetQuery<Database.Models.FeaturePermission>(out string tableName, out string columns);
+            IEnumerable<Database.Models.FeaturePermission>? features = await _dbService.ExecuteQueryAsync<Database.Models.FeaturePermission>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 
             return features;
         }
 
-        public async Task<Database.Models.Feature> GetFeatureAsync(Database.Models.Feature feature)
+        public async Task<Database.Models.FeaturePermission> GetFeatureAsync(Database.Models.FeaturePermission feature)
         {
             string[] idCol = { "user_id", "feature_id" };
             PostgresDataAccess.BuildGetQuery(feature, out string tableName, out string columns, out DynamicParameters parameters, idCol);
-            feature = await _dbService.ExecuteQueryFirstAsync<Database.Models.Feature>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+            feature = await _dbService.ExecuteQueryFirstAsync<Database.Models.FeaturePermission>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
 
             return feature;
         }
 
-        public async Task<bool> UpdateFeatureAsync(Database.Models.Feature feature)
+        public async Task<bool> UpdateFeatureAsync(Database.Models.FeaturePermission feature)
         {
             string[] idCol = { "user_id", "feature_id" };
             PostgresDataAccess.BuildUpdateQuery(feature, out string tableName, out string columns);
@@ -288,7 +289,7 @@ namespace SearchAndRescue.User.Repositories
         {
             string idCol = "user_id";
             DynamicParameters paramModel = new();
-            paramModel.Add($"p{idCol.Replace("_", "")}", userId);
+            paramModel.Add($"p{idCol.FromSnakeCase()}", userId);
             PostgresDataAccess.BuildGetQuery<Database.Models.Role>(out string tableName, out string columns);
             Database.Models.Role role = await _dbService.ExecuteQueryFirstAsync<Database.Models.Role>(Core.Database.Queries.GetById(columns, tableName, idCol), paramModel);
 

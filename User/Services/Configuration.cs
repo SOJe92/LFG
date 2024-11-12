@@ -18,16 +18,16 @@ namespace SearchAndRescue.User.Services
         public async Task<Dtos.Get.Configuration> GetAsync(Guid id)
         {
             Dtos.Get.Configuration configuration = new();
-            configuration.Settings = _mapper.Map<Dtos.Base.Setting>(await _repo.GetSettingsAsync(id));
-            configuration.ContactTypes = _mapper.Map<IEnumerable<Dtos.Base.ContactType>>(await _repo.GetContactTypesAsync(id));
-            configuration.PointOfInterests = _mapper.Map<IEnumerable<Dtos.Base.PointOfInterest>>(await _repo.GetPointOfInterestsAsync(id));
-            configuration.Entities = _mapper.Map<IEnumerable<Dtos.Base.Entity>>(await _repo.GetEntitiesAsync(id));
-            configuration.Favourites = _mapper.Map<IEnumerable<Dtos.Base.Favourite>>(await _repo.GetFavouritesAsync(id));
-            configuration.Features = _mapper.Map<IEnumerable<Dtos.Base.Feature>>(await _repo.GetFeaturesAsync(id));
-            configuration.Keywords = _mapper.Map<IEnumerable<Dtos.Base.Keyword>>(await _repo.GetKeywordsAsync(id));
-            configuration.Role = _mapper.Map<Dtos.Base.Role>(await _repo.GetRoleAsync(id));
-            configuration.Sectors = _mapper.Map<IEnumerable<Dtos.Base.SectorService>>(await _repo.GetSectorServicesAsync(id));
-            configuration.Users = _mapper.Map<IEnumerable<Dtos.Base.User>>(await _repo.GetUsersAsync(id));
+            configuration.Settings = _mapper.Map<Dtos.Get.Setting>(await _repo.GetSettingsAsync(id));
+            configuration.ContactTypes = _mapper.Map<IEnumerable<Dtos.Get.ContactType>>(await _repo.GetContactTypesAsync(id));
+            configuration.PointOfInterests = _mapper.Map<IEnumerable<Dtos.Get.PointOfInterest>>(await _repo.GetPointOfInterestsAsync(id));
+            configuration.Entities = _mapper.Map<IEnumerable<Dtos.Get.Entity>>(await _repo.GetEntitiesAsync(id));
+            configuration.Favourites = _mapper.Map<IEnumerable<Dtos.Get.Favourite>>(await _repo.GetFavouritesAsync(id));
+            configuration.Features = _mapper.Map<IEnumerable<Dtos.Get.Feature>>(await _repo.GetFeaturesAsync(id));
+            configuration.Keywords = _mapper.Map<IEnumerable<Dtos.Get.Keyword>>(await _repo.GetKeywordsAsync(id));
+            configuration.Role = _mapper.Map<Dtos.Get.Role>(await _repo.GetRoleAsync(id));
+            configuration.Sectors = _mapper.Map<IEnumerable<Dtos.Get.SectorService>>(await _repo.GetSectorServicesAsync(id));
+            configuration.Users = _mapper.Map<IEnumerable<Dtos.Get.User>>(await _repo.GetUsersAsync(id));
             return configuration;
         }
 

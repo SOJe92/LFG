@@ -1,4 +1,4 @@
-﻿using FeatureBase = SearchAndRescue.User.Dtos.Base.Feature;
+﻿using FeatureBase = SearchAndRescue.User.Dtos.Base.FeaturePermission;
 
 namespace SearchAndRescue.User.Dtos.Post
 {

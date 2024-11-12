@@ -234,7 +234,7 @@ namespace SearchAndRescue.User.Services
 
         public async Task<Dtos.Get.Feature> GetFeatureAsync(Dtos.Get.Feature feature)
         {
-            var model = _mapper.Map<Database.Models.Feature>(feature);
+            var model = _mapper.Map<Database.Models.FeaturePermission>(feature);
             var result = _mapper.Map<Dtos.Get.Feature>(await _repo.GetFeatureAsync(model));
             return result;
         }
@@ -338,7 +338,7 @@ namespace SearchAndRescue.User.Services
 
         public async Task<bool> UpdateFeatureAsync(Dtos.Post.Feature feature)
         {
-            var model = _mapper.Map<Database.Models.Feature>(feature);
+            var model = _mapper.Map<Database.Models.FeaturePermission>(feature);
             var result = await _repo.UpdateFeatureAsync(model);
             return result;
         }

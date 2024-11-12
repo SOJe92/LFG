@@ -11,6 +11,7 @@ namespace SearchAndRescue.Products.Services
         public Products(Repo repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Dtos.Get.Products>> GetAsync()

@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SearchAndRescue.User.Database.Models
 {
-    [Table("lookup.userfeatures")]
-    public record Feature : DbEntity
+    [Table("lookup.userfeaturepermissions")]
+    public record FeaturePermission : DbEntity
     {
         [Column("user_id")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
@@ -13,7 +13,11 @@ namespace SearchAndRescue.User.Database.Models
 
         [Column("feature_id")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]
-        public Guid FeatureId { get;set; }
+        public Guid FeatureId { get; set; }
+
+        [Column("permission_id")]
+        [DapperParamDirection(System.Data.ParameterDirection.Input)]
+        public Guid PermissionId { get; set; }
 
         [Column("enabled")]
         [DapperParamDirection(System.Data.ParameterDirection.Input)]

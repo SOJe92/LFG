@@ -16,6 +16,8 @@ builder.Services.AddSwaggerGen(options =>
 
 RepositoryRegistration.RegisterRepositories(builder.Services);
 ServicesRegistration.RegisterServices(builder.Services);
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
 
 var app = builder.Build();
 

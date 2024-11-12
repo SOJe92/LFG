@@ -26,7 +26,6 @@ namespace SearchAndRescue.User.Services
             Database.Models.User userRegistration = _mapper.Map<Database.Models.User>(login);
             userRegistration = await _repository.GetByEmailAsync(userRegistration);
             Dtos.Get.User loginUser = _mapper.Map<Dtos.Get.User>(userRegistration);
-            loginUser.Id = await Register(login);
             loginUser.Configuration = await _config.GetAsync(loginUser.Id);
             return loginUser;
         }

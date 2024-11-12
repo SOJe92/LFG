@@ -3,7 +3,7 @@ using SearchAndRescue.Category.Contracts.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SearchAndRescue.Template.Controllers
+namespace SearchAndRescue.Category.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -11,10 +11,7 @@ namespace SearchAndRescue.Template.Controllers
     {
         private readonly ICategory _category;
 
-        public CategoryController(ICategory category)
-        {
-            _category = category;
-        }
+        public CategoryController(ICategory category) => _category = category;
 
 
         // GET: api/<TemplateController>
@@ -26,9 +23,13 @@ namespace SearchAndRescue.Template.Controllers
 
         // GET api/<TemplateController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return NotFound();
+            Dtos.Get.Category category = new()
+            {
+                Id = id
+            };
+            return Ok(await _category.GetCategoryAsync(category));
         }
     }
 }
