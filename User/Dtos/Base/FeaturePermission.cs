@@ -2,8 +2,6 @@
 {
     public class FeaturePermission
     {
-
-
         public Guid? UserId { get; set; }
 
         public Guid? FeatureId { get; set; }

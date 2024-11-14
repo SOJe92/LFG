@@ -20,7 +20,16 @@ namespace SearchAndRescue.Admin.Controllers
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
-            return Ok(await _service.GetUsersAsync());
+            var result = await _service.GetUsersAsync();
+            return Ok(result);
+        }
+
+        // GET: api/<TemplateController>
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetUser(Guid id)
+        {
+            var result = await _service.GetUserAsync(id);
+            return Ok(result);
         }
     }
 }

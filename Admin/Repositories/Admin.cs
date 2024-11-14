@@ -14,6 +14,17 @@ namespace SearchAndRescue.Admin.Repositories
             _dbService = dbService;
         }
 
+        public async Task<Database.Models.User> GetUserAsync(Guid id)
+        {
+            string idCol = "id";
+            DynamicParameters parameters = new();
+            parameters.Add($"p{idCol}", id);
+            PostgresDataAccess.BuildGetQuery<Database.Models.User>(out string tableName, out string columns);
+            var user = await _dbService.ExecuteQueryFirstAsync<Database.Models.User>(Core.Database.Queries.GetById(columns, tableName, idCol), parameters);
+
+            return user;
+        }
+
         public async Task<IEnumerable<Database.Models.User>> GetUsersAsync()
         {
             PostgresDataAccess.BuildGetQuery(new Database.Models.User(), out string tableName, out string columns, out DynamicParameters parameters);

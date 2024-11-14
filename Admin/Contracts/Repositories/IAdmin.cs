@@ -3,5 +3,6 @@
     public interface IAdmin
     {
         Task<IEnumerable<Database.Models.User>> GetUsersAsync();
+        Task<Database.Models.User> GetUserAsync(Guid id);
     }
 }

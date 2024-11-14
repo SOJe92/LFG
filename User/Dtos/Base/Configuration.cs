@@ -23,6 +23,8 @@ namespace SearchAndRescue.User.Dtos.Base
 
         public IEnumerable<Get.User> Users { get; set; }
 
+        public IEnumerable<Get.FeaturePermission> FeaturePermissions { get; set; }
+
         public Get.Setting Settings { get; set; }
     }
 }

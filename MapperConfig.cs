@@ -1,6 +1,7 @@
 ﻿namespace SearchAndRescue
 {
     using AutoMapper;
+    using AdminMappingProfile = Admin.Database.MappingProfile;
     using UserMappingProfile = User.Database.MappingProfile;
     using ExternalMappingProfile = External.Database.MappingProfile;
     using EntitiesMappingProfile = Entities.Database.MappingProfile;
@@ -25,6 +26,7 @@
 
         static MapperConfiguration Configuration = new(cfg =>
         {
+            cfg.AddProfile(new AdminMappingProfile());
             cfg.AddProfile(new UserMappingProfile());
             cfg.AddProfile(new ExternalMappingProfile());
             cfg.AddProfile(new EntityMappingProfile());

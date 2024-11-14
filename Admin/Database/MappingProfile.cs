@@ -6,6 +6,8 @@ namespace SearchAndRescue.Admin.Database
     {
         public MappingProfile()
         {
+            CreateMap<Dtos.Get.User, Models.User>();
+            CreateMap<Models.User, Dtos.Get.User>();
         }
     }
 }
