@@ -1,6 +1,6 @@
 ﻿using UserBase = SearchAndRescue.Admin.Dtos.Base.User;
 
-namespace SearchAndRescue.Admin.Dtos.Get
+namespace SearchAndRescue.Admin.Dtos.Put
 {
     public class User : UserBase
     {
@@ -8,9 +8,8 @@ namespace SearchAndRescue.Admin.Dtos.Get
         {
             Configuration = new();
         }
-
         public Guid Id { get; set; }
 
-        public SearchAndRescue.User.Dtos.Get.Configuration Configuration { get; set; }
+        public SearchAndRescue.User.Dtos.Put.Configuration? Configuration { get; set; }
     }
 }

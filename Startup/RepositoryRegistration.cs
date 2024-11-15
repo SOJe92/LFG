@@ -1,6 +1,8 @@
 ﻿namespace SearchAndRescue.Startup
 {
+    using AdminRepository = Admin.Repositories.Admin;
     using CategoryRepository = Category.Repositories.Category;
+    using ConfigurationRepository = Configuration.Repositories.Configuration;
     using ContactTypeRepository = ContactType.Repositories.ContactType;
     using EntitiesRepository = Entities.Repositories.Entities;
     using EntityRepository = Entity.Repositories.Entity;
@@ -8,8 +10,8 @@
     using FavouriteRepository = Favourite.Repositories.Favourite;
     using FeatureRepository = Feature.Repositories.Feature;
     using IAdminRepository = Admin.Contracts.Repositories.IAdmin;
-    using AdminRepository = Admin.Repositories.Admin;
     using ICategoryRepository = Category.Contracts.Repositories.ICategory;
+    using IConfigurationRepository = Configuration.Contracts.Repositories.IConfiguration;
     using IContactTypeRepository = ContactType.Contracts.Repositories.IContactType;
     using IEntitiesRepository = Entities.Contracts.Repositories.IEntities;
     using IEntityRepository = Entity.Contracts.Repositories.IEntity;
@@ -37,6 +39,7 @@
         {
             serviceCollection.AddTransient<IAdminRepository, AdminRepository>();
             serviceCollection.AddTransient<IUserRepository, UserRepository>();
+            serviceCollection.AddTransient<IConfigurationRepository, ConfigurationRepository>();
             serviceCollection.AddTransient<IContactTypeRepository, ContactTypeRepository>();
             serviceCollection.AddTransient<IExternalUserRepository, ExternalUserRepository>();
             serviceCollection.AddTransient<IEntitiesRepository, EntitiesRepository>();

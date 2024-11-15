@@ -42,8 +42,8 @@ namespace SearchAndRescue.Favourite.Services
         public async Task<Dtos.Get.EntityFavourite> GetEntityFavouriteAsync(Dtos.Get.EntityFavourite entityFavourite)
         {
             Database.Models.EntityFavourite? model = _mapper.Map<Database.Models.EntityFavourite>(entityFavourite);
-            Database.Models.EntityFavourite? result = await _repo.GetEntityFavouriteAsync(model);
-            return _mapper.Map<Dtos.Get.EntityFavourite>(result);
+            model = await _repo.GetEntityFavouriteAsync(model);
+            return _mapper.Map<Dtos.Get.EntityFavourite>(model);
         }
 
         public async Task<IEnumerable<Dtos.Get.EntityFavourite>> GetEntityFavouritesAsync()

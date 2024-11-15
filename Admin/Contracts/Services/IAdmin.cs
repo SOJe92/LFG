@@ -4,5 +4,6 @@
     {
         Task<IEnumerable<Dtos.Get.User>> GetUsersAsync();
         Task<Dtos.Get.User> GetUserAsync(Guid id);
+        Task<bool> UpdateUserAsync(Dtos.Put.User user);
     }
 }

@@ -32,7 +32,7 @@ namespace SearchAndRescue.User.Services
             return configuration;
         }
 
-        public async Task<bool> UpdateAsync(Guid id, Dtos.Post.Configuration config)
+        public async Task<bool> UpdateAsync(Guid id, Dtos.Put.Configuration config)
         {
             var result = await _repo.UpdateSettingsAsync(_mapper.Map<Database.Models.Setting>(config));
             return result;

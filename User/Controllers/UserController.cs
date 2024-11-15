@@ -65,7 +65,7 @@ namespace SearchAndRescue.User.Controllers
 
         [AllowAnonymous]
         [HttpPut("{id}/configuration")]
-        public async Task<IActionResult> UpdateConfiguration(Guid id, [FromBody] Dtos.Post.Configuration configuration)
+        public async Task<IActionResult> UpdateConfiguration(Guid id, [FromBody] Dtos.Put.Configuration configuration)
         {
             var success = _configurationService.UpdateAsync(id, configuration);
             return Ok(success);

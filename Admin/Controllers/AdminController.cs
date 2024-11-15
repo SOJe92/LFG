@@ -31,5 +31,12 @@ namespace SearchAndRescue.Admin.Controllers
             var result = await _service.GetUserAsync(id);
             return Ok(result);
         }
+
+        [HttpPut("user/{id}")]
+        public async Task<IActionResult> UpdateUser(Dtos.Put.User user)
+        {
+            var result = await _service.UpdateUserAsync(user);
+            return Ok(result);
+        }
     }
 }

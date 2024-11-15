@@ -20,6 +20,17 @@ namespace SearchAndRescue.Feature.Services
             return _mapper.Map<Dtos.Get.Feature>(await _repo.GetFeatureAsync(model));
         }
 
+        public async Task<Dtos.Get.FeaturePermission> GetFeaturePermissionAsync(Dtos.Get.FeaturePermission feature)
+        {
+            var model = _mapper.Map<Database.Models.FeaturePermission>(feature);
+            return _mapper.Map<Dtos.Get.FeaturePermission>(await _repo.GetFeaturePermissionAsync(model));
+        }
+
+        public async Task<IEnumerable<Dtos.Get.FeaturePermission>> GetFeaturePermissionsAsync()
+        {
+            return _mapper.Map<IEnumerable<Dtos.Get.FeaturePermission>>(await _repo.GetFeaturePermissionsAsync());
+        }
+
         public async Task<IEnumerable<Dtos.Get.Feature>> GetFeaturesAsync()
         {
             return _mapper.Map<IEnumerable<Dtos.Get.Feature>>(await _repo.GetFeaturesAsync());

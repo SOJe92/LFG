@@ -6,6 +6,7 @@
     using ExternalMappingProfile = External.Database.MappingProfile;
     using EntitiesMappingProfile = Entities.Database.MappingProfile;
     using CategoryMappingProfile = Category.Database.MappingProfile;
+    using ConfigurationMappingProfile = Configuration.Database.MappingProfile;
     using ContactTypeMappingProfile = ContactType.Database.MappingProfile;
     using FavouriteMappingProfile = Favourite.Database.MappingProfile;
     using EntityMappingProfile = Entity.Database.MappingProfile;
@@ -29,6 +30,7 @@
             cfg.AddProfile(new AdminMappingProfile());
             cfg.AddProfile(new UserMappingProfile());
             cfg.AddProfile(new ExternalMappingProfile());
+            cfg.AddProfile(new ConfigurationMappingProfile());
             cfg.AddProfile(new EntityMappingProfile());
             cfg.AddProfile(new EntitiesMappingProfile());
             cfg.AddProfile(new CategoryMappingProfile());

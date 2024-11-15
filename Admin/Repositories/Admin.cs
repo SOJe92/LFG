@@ -32,5 +32,14 @@ namespace SearchAndRescue.Admin.Repositories
 
             return users;
         }
+
+        public async Task<bool> UpdateUserAsync(Database.Models.User user)
+        {
+            PostgresDataAccess.BuildUpdateQuery(user, out string tableName, out string columns);
+
+            bool result = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, "id"), user);
+
+            return result;
+        }
     }
 }

@@ -94,7 +94,28 @@ namespace SearchAndRescue.User.Database
 
         private void MapPut()
         {
-
+            CreateMap<Dtos.Put.User, Models.User>();
+            CreateMap<Models.User, Dtos.Put.User>();
+            CreateMap<Dtos.Put.ChildUser, Models.ChildUser>();
+            CreateMap<Models.ChildUser, Dtos.Put.ChildUser>();
+            CreateMap<Dtos.Put.ContactType, Models.ContactType>();
+            CreateMap<Models.ContactType, Dtos.Put.ContactType>();
+            CreateMap<Dtos.Put.Entity, Models.Entity>();
+            CreateMap<Models.Entity, Dtos.Put.Entity>();
+            CreateMap<Dtos.Put.Favourite, Models.Favourite>();
+            CreateMap<Models.Favourite, Dtos.Put.Favourite>();
+            CreateMap<Dtos.Put.Feature, Models.FeaturePermission>();
+            CreateMap<Models.FeaturePermission, Dtos.Put.Feature>();
+            CreateMap<Dtos.Put.Keyword, Models.Keyword>();
+            CreateMap<Models.Keyword, Dtos.Put.Keyword>();
+            CreateMap<Dtos.Put.PointOfInterest, Models.PointOfInterest>();
+            CreateMap<Models.PointOfInterest, Dtos.Put.PointOfInterest>();
+            CreateMap<Dtos.Put.Role, Models.Role>();
+            CreateMap<Models.Role, Dtos.Put.Role>();
+            CreateMap<Dtos.Put.SectorService, Models.SectorService>();
+            CreateMap<Models.SectorService, Dtos.Put.SectorService>();
+            CreateMap<Dtos.Put.Setting, Models.Setting>();
+            CreateMap<Models.Setting, Dtos.Put.Setting>();
         }
     }
 }

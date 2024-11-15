@@ -6,6 +6,8 @@ namespace SearchAndRescue.Configuration.Database
     {
         public MappingProfile()
         {
+            CreateMap<Dtos.Get.Permission, Models.Permission>();
+            CreateMap<Models.Permission, Dtos.Get.Permission>();
         }
     }
 }

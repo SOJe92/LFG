@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SearchAndRescue.Admin.Contracts.Services;
-using SearchAndRescue.User.Contracts.Services;
 using IConfiguration = SearchAndRescue.User.Contracts.Services.IConfiguration;
 using IRepo = SearchAndRescue.Admin.Contracts.Repositories.IAdmin;
 
@@ -22,7 +21,7 @@ namespace SearchAndRescue.Admin.Services
         public async Task<Dtos.Get.User> GetUserAsync(Guid id)
         {
             Database.Models.User? result = await _repo.GetUserAsync(id);
-            var user = _mapper.Map<Dtos.Get.User>(result);
+            Dtos.Get.User? user = _mapper.Map<Dtos.Get.User>(result);
             user.Configuration = await _userConfigurationService.GetAsync(id);
             return user;
         }
@@ -31,6 +30,16 @@ namespace SearchAndRescue.Admin.Services
         {
             IEnumerable<Database.Models.User>? result = await _repo.GetUsersAsync();
             return _mapper.Map<IEnumerable<Dtos.Get.User>>(result);
+        }
+
+        public async Task<bool> UpdateUserAsync(Dtos.Put.User user)
+        {
+            var result = await _repo.UpdateUserAsync(_mapper.Map<Database.Models.User>(user));
+            if (result)
+            {
+                result = await _userConfigurationService.UpdateAsync(user.Id, user.Configuration);
+            }
+            return result;
         }
     }
 }

@@ -4,6 +4,6 @@
     {
         Task<Dtos.Get.Configuration> GetAsync(Guid id);
 
-        Task<bool> UpdateAsync(Guid id, Dtos.Post.Configuration config);
+        Task<bool> UpdateAsync(Guid id, Dtos.Put.Configuration config);
     }
 }
