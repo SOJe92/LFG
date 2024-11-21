@@ -5,11 +5,6 @@ namespace SearchAndRescue.User.Dtos.Base
     [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class User
     {
-        public User()
-        {
-            Configuration = new();
-        }
-
         public string? Username { get; set; } = null;
 
         public string? Email { get; set; } = null;
@@ -43,7 +38,5 @@ namespace SearchAndRescue.User.Dtos.Base
         public long? X { get; set; }
 
         public long? Y { get; set; }
-
-        public Configuration? Configuration { get; set; }
     }
 }

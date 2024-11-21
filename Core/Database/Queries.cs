@@ -26,27 +26,27 @@ namespace SearchAndRescue.Core.Database
 
         public static string Update(string columns, string tableName)
         {
-            return $"UPDATE {tableName} SET {columns}; RETURN 1;";
+            return $"UPDATE {tableName} SET {columns}; RETURNING 1;";
         }
 
         public static string UpdateById(string columns, string tableName, string identifierColumn)
         {
-            return $"UPDATE {tableName} SET {columns} WHERE {identifierColumn} = @p{identifierColumn.FromSnakeCase()}; RETURN 1;";
+            return $"UPDATE {tableName} SET {columns} WHERE {identifierColumn} = @p{identifierColumn.FromSnakeCase()} RETURNING 1;";
         }
 
         public static string UpdateById(string columns, string tableName, string[] identifierColumns)
         {
-            return $"UPDATE {tableName} SET {columns} WHERE {identifierColumns.Select((column) => { return $"{column} = p{column.FromSnakeCase()}"; })}; RETURN 1;";
+            return $"UPDATE {tableName} SET {columns} WHERE {string.Join(" AND ", identifierColumns.Select((column) => $"{column} = @p{column.FromSnakeCase()}" ))} RETURNING 1;";
         }
 
         public static string DeleteById( string tableName, string identifierColumn)
         {
-            return $"DELETE FROM {tableName} WHERE {identifierColumn} = @p{identifierColumn.Replace("_", "")}; RETURN 1;";
+            return $"DELETE FROM {tableName} WHERE {identifierColumn} = @p{identifierColumn.FromSnakeCase()} RETURNING 1;";
         }
 
         public static string DeleteById(string tableName, string[] identifierColumns)
         {
-            return $"DELETE FROM {tableName} WHERE {identifierColumns.Select((column) => { return $"{column} = p{column.FromSnakeCase()}"; })}; RETURN 1;";
+            return $"DELETE FROM {tableName} WHERE {identifierColumns.Select((column) => { return $"{column} = p{column.FromSnakeCase()}"; })} RETURNING 1;";
         }
     }
 }

@@ -22,7 +22,7 @@ namespace SearchAndRescue.Admin.Services
         {
             Database.Models.User? result = await _repo.GetUserAsync(id);
             Dtos.Get.User? user = _mapper.Map<Dtos.Get.User>(result);
-            user.Configuration = await _userConfigurationService.GetAsync(id);
+            user.Configuration = _mapper.Map<SearchAndRescue.User.Dtos.Get.Configuration>(await _userConfigurationService.GetAsync(id));
             return user;
         }
 
@@ -34,8 +34,12 @@ namespace SearchAndRescue.Admin.Services
 
         public async Task<bool> UpdateUserAsync(Dtos.Put.User user)
         {
-            var result = await _repo.UpdateUserAsync(_mapper.Map<Database.Models.User>(user));
-            if (result)
+            var result = true;
+            if (user.Email?.Length > 0 || user.Username?.Length > 0)
+            {
+                result = await _repo.UpdateUserAsync(_mapper.Map<Database.Models.User>(user));
+            }
+            if (result && user.Configuration != null)
             {
                 result = await _userConfigurationService.UpdateAsync(user.Id, user.Configuration);
             }

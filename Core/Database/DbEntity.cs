@@ -9,6 +9,6 @@ namespace SearchAndRescue.Core.Database
         [Column("id")]
         [Key]
         [DapperParamDirection(System.Data.ParameterDirection.Output)]
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
     }
 }

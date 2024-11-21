@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen(options =>
 RepositoryRegistration.RegisterRepositories(builder.Services);
 ServicesRegistration.RegisterServices(builder.Services);
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-
+AppContext.SetSwitch("Npgsql.EnableStoredProcedureCompatMode", true);
 
 var app = builder.Build();
 

@@ -52,11 +52,11 @@ namespace SearchAndRescue.Product.Repositories
             var param = new DynamicParameters();
             param.Add("id", product.Id);
 
-            PostgresDataAccess.BuildUpdateQuery(product, out string tableName, out string columns);
+            PostgresDataAccess.BuildUpdateQuery(product, out string tableName, out string columns, out DynamicParameters parameters);
 
-            var result = await _dbService.SetData($"UPDATE {tableName} SET {columns} WHERE id = @id;", product);
+            var result = await _dbService.SetData< bool>($"UPDATE {tableName} SET {columns} WHERE id = @id;", parameters);
 
-            return result > 0;
+            return result ;
         }
     }
 }

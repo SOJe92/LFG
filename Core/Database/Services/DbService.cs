@@ -45,13 +45,13 @@ namespace SearchAndRescue.Core.Database.Services
             return result;
         }
 
-        public async Task<int> SetData(string command, object parameters)
+        public async Task<T> SetData<T>(string command, object parameters)
         {
-            int result;
+            T result;
             try
             {
                 using IDbConnection dbConnection = new NpgsqlConnection(_connectionString);
-                result = await dbConnection.ExecuteAsync(command, parameters);
+                result = await dbConnection.ExecuteScalarAsync<T>(command, parameters);
             }
             catch (Exception)
             {
@@ -141,6 +141,7 @@ namespace SearchAndRescue.Core.Database.Services
                 var result = await dbConnection.QueryFirstOrDefaultAsync<T>(command, parameters);
                 return result ?? (T)Activator.CreateInstance(typeof(T));
             }
+            
             catch (Exception)
             {
                 throw;

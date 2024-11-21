@@ -58,11 +58,11 @@ namespace SearchAndRescue.Entity.Repositories
 
         public async Task<bool> UpdateAsync(Database.Models.Entity entity)
         {
-            PostgresDataAccess.BuildUpdateQuery(entity, out string tableName, out string columns);
+            PostgresDataAccess.BuildUpdateQuery(entity, out string tableName, out string columns, out DynamicParameters parameters);
 
-            int result = await _dbService.SetData(Core.Database.Queries.UpdateById(columns, tableName, "id"), entity);
+            bool result = await _dbService.SetData<bool>(Core.Database.Queries.UpdateById(columns, tableName, "id"), parameters);
 
-            return result > 0;
+            return result;
         }
     }
 }

@@ -229,6 +229,14 @@ namespace SearchAndRescue.User.Repositories
             return features;
         }
 
+        public async Task<Guid> AddFeatureAsync(Database.Models.FeaturePermission feature)
+        {
+            PostgresDataAccess.BuildParams(feature, out DynamicParameters parametersModel);
+            Guid result = await _dbService.ExecuteQueryFirstAsync<Guid>(Queries.AddFeature, parametersModel);
+
+            return result;
+        }
+
         public async Task<Database.Models.FeaturePermission> GetFeatureAsync(Database.Models.FeaturePermission feature)
         {
             string[] idCol = { "user_id", "feature_id" };
@@ -240,9 +248,9 @@ namespace SearchAndRescue.User.Repositories
 
         public async Task<bool> UpdateFeatureAsync(Database.Models.FeaturePermission feature)
         {
-            string[] idCol = { "user_id", "feature_id" };
-            PostgresDataAccess.BuildUpdateQuery(feature, out string tableName, out string columns);
-            var success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, idCol), feature);
+            string[] idCol = { "user_id", "feature_id", "permission_id" };
+            PostgresDataAccess.BuildUpdateQuery(feature, out string tableName, out string columns, out DynamicParameters parameters, idCol);
+            var success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, idCol), parameters);
 
             return success;
         }
@@ -414,8 +422,8 @@ namespace SearchAndRescue.User.Repositories
         public async Task<bool> UpdateSettingsAsync(Setting setting)
         {
             string[] idCol = { "user_id", "feature_id" };
-            PostgresDataAccess.BuildUpdateQuery(setting, out string tableName, out string columns);
-            var success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, idCol), setting);
+            PostgresDataAccess.BuildUpdateQuery(setting, out string tableName, out string columns, out DynamicParameters parameters);
+            var success = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, idCol), parameters);
 
             return success;
         }

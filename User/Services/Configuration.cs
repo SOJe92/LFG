@@ -34,7 +34,44 @@ namespace SearchAndRescue.User.Services
 
         public async Task<bool> UpdateAsync(Guid id, Dtos.Put.Configuration config)
         {
-            var result = await _repo.UpdateSettingsAsync(_mapper.Map<Database.Models.Setting>(config));
+            bool result = true;
+            if (config.Settings != null)
+            {
+                result = await _repo.UpdateSettingsAsync(_mapper.Map<Database.Models.Setting>(config.Settings));
+            }
+            if (result)
+            {
+                if (config.FeaturePermissions != null && config.FeaturePermissions.Any())
+                {
+                    try
+                    {
+                        IEnumerable<Dtos.Put.FeaturePermission>? newFeaturePermissions = config.FeaturePermissions.Where(featurePermission => !featurePermission.Id.HasValue);
+                        IEnumerable<Dtos.Put.FeaturePermission>? existingFeaturePermissions = config.FeaturePermissions.Where(featurePermission => featurePermission.Id.HasValue);
+                        if (newFeaturePermissions.Any())
+                        {
+                            for (int i = 0; i < newFeaturePermissions.Count(); i++)
+                            {
+                                Dtos.Put.FeaturePermission? featurePermission = newFeaturePermissions.ElementAt(i);
+                                var model = _mapper.Map<Database.Models.FeaturePermission>(featurePermission);
+                                featurePermission.Id = await _repo.AddFeatureAsync(model);
+                            }
+                        }
+                        if (existingFeaturePermissions.Any())
+                        {
+                            for (int i = 0; i < existingFeaturePermissions.Count(); i++)
+                            {
+                                Dtos.Put.FeaturePermission? featurePermission = existingFeaturePermissions.ElementAt(i);
+                                var model = _mapper.Map<Database.Models.FeaturePermission>(featurePermission);
+                                result = await _repo.UpdateFeatureAsync(model);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+            }
             return result;
         }
     }

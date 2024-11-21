@@ -54,6 +54,8 @@ namespace SearchAndRescue.User.Database
             CreateMap<Models.Favourite, Dtos.Get.Favourite>();
             CreateMap<Dtos.Get.Feature, Models.FeaturePermission>();
             CreateMap<Models.FeaturePermission, Dtos.Get.Feature>();
+            CreateMap<Dtos.Get.FeaturePermission, Models.FeaturePermission>();
+            CreateMap<Models.FeaturePermission, Dtos.Get.FeaturePermission>();
             CreateMap<Dtos.Get.Keyword, Models.Keyword>();
             CreateMap<Models.Keyword, Dtos.Get.Keyword>();
             CreateMap<Dtos.Get.PointOfInterest, Models.PointOfInterest>();

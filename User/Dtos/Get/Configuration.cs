@@ -4,8 +4,6 @@ namespace SearchAndRescue.User.Dtos.Get
 {
     public class Configuration : ConfigurationBase
     {
-        public Guid Id { get; set; }
-
         public IEnumerable<Get.Favourite> Favourites { get; set; }
 
         public IEnumerable<Get.ContactType> ContactTypes { get; set; }

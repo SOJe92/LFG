@@ -33,10 +33,17 @@ namespace SearchAndRescue.Admin.Controllers
         }
 
         [HttpPut("user/{id}")]
-        public async Task<IActionResult> UpdateUser(Dtos.Put.User user)
+        public async Task<IActionResult> UpdateUser([FromBody]Dtos.Put.User user)
         {
-            var result = await _service.UpdateUserAsync(user);
-            return Ok(result);
+            try
+            {
+                var result = await _service.UpdateUserAsync(user);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

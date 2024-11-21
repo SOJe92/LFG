@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System.Data;
 
 namespace SearchAndRescue.Core.Database.Contracts
 {
@@ -6,7 +7,7 @@ namespace SearchAndRescue.Core.Database.Contracts
     {
         Task<T> GetAsync<T>(string command, object parameters);
         Task<IEnumerable<T>> GetAll<T>(string command, object parameters);
-        Task<int> SetData(string command, object parameters);
+        Task<T> SetData<T>(string command, object parameters);
         Task<int> SetData(string command, DynamicParameters parameters = null);
         Task<DynamicParameters> ExecuteProcedureAsync(string command, DynamicParameters parameters = null);
         Task<int> ExecuteFunctionAsync(string command, object parameters = null);

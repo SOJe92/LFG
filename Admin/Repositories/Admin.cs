@@ -35,9 +35,9 @@ namespace SearchAndRescue.Admin.Repositories
 
         public async Task<bool> UpdateUserAsync(Database.Models.User user)
         {
-            PostgresDataAccess.BuildUpdateQuery(user, out string tableName, out string columns);
+            PostgresDataAccess.BuildUpdateQuery(user, out string tableName, out string columns, out DynamicParameters parameters);
 
-            bool result = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, "id"), user);
+            bool result = await _dbService.ExecuteQueryFirstAsync<bool>(Core.Database.Queries.UpdateById(columns, tableName, "id"), parameters);
 
             return result;
         }
