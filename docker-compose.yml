@@ -13,3 +13,8 @@ services:
   #   environment:
   #     - ACCEPT_EULA=y
   #     - SA_PASSWORD=password
+  volumes:
+    - ./server:/app
+    - /app/obj/
+    - /app/bin/
+    - /app/out/
