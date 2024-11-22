@@ -42,7 +42,7 @@ jobs:
           registryPassword: ${{ secrets.NEEDITAPI_REGISTRY_PASSWORD }}
           containerAppName: needit-api
           resourceGroup: dev-needit-uk
-          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+          imageToBuild: default/[parameters('needit-api')]:${{ github.sha }}
           _buildArgumentsKey_: |
             _buildArgumentsValues_
 
