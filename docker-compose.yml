@@ -1,0 +1,15 @@
+﻿version: "1.0"  # optional since v1.27.0
+services:
+  web_api:
+    image: needit-api
+    container_name: needit-api-application
+    ports:
+      - "5000:80"
+  # postgresql:
+  #   image: "postgresl:16"
+  #   container_name: postgres-needit-main
+  #   ports: # not actually needed, because the two services are on the same network
+  #     - "1433:1433" 
+  #   environment:
+  #     - ACCEPT_EULA=y
+  #     - SA_PASSWORD=password
