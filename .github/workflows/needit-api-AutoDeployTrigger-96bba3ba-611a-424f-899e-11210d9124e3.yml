@@ -36,7 +36,7 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
-          registryUrl: 
+          registryUrl: ${{ secrets.NEEDITAPI_REGISTRY_URL }}
           registryUsername: ${{ secrets.NEEDITAPI_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.NEEDITAPI_REGISTRY_PASSWORD }}
           containerAppName: needit-api
