@@ -2,7 +2,7 @@
 services:
   web_api:
     image: needit-api
-    container_name: needit-api-application
+    container_name: needit
     ports:
       - "5000:80"
   # postgresql:
@@ -13,8 +13,3 @@ services:
   #   environment:
   #     - ACCEPT_EULA=y
   #     - SA_PASSWORD=password
-  volumes:
-    - ./server:/app
-    - /app/obj/
-    - /app/bin/
-    - /app/out/

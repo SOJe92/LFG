@@ -19,8 +19,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Exe</OutputType>
     <UserSecretsId>3b6778ae-683b-452c-b467-a2e543b5e40f</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+    <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0</ContainerBaseImage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -95,5 +98,9 @@
     <Folder Include="Search\Database\" />
     <Folder Include="Search\Database\Models\" />
     <Folder Include="Search\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContainerPort Include="8081" />
   </ItemGroup>
 </Project>
